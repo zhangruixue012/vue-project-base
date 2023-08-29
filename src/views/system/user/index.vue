@@ -112,7 +112,7 @@
         </el-col>
       </el-row>
 
-      <Table :tableData="tableData" :columnData="columnData" :pageTotal="pageTotal" :pageParam="page">
+      <Table :tableData ="tableData" :columnData="columnData" :pageTotal="pageTotal" :pageParam="page">
         <!--   #status == v-slot:status     -->
         <template #status="{ data }">
           <el-switch
@@ -123,23 +123,28 @@
         </template>
 
         <template #event="{ data }">
-          <el-button text type="primary" size="small" class="table-operate-btn">修改</el-button>
+          <el-button text type="primary" @click="editRow(data)" size="small" class="table-operate-btn">修改</el-button>
           <el-button text type="primary" size="small" class="table-operate-btn">删除</el-button>
           <el-button text type="primary" size="small" class="table-operate-btn">重置密码</el-button>
           <el-button text type="primary" size="small" class="table-operate-btn">分配角色</el-button>
         </template>
       </Table>
     </div>
+
+    <add-user ref="addUserRef" @refreshList="refreshList"></add-user>
   </div>
 </template>
 
 <script setup>
+import AddUser from './addUser';
 import { queryDeptTree } from "@/api/common";
 import { listUser, changeUserStatus } from '@/api/system/user';
+
 const { proxy } = getCurrentInstance();
 const deptName = ref('');
 const deptOptions = ref(undefined);
 const tableData = ref([]);
+const addUserRef = ref();
 const loading = ref(false);
 const queryParams = reactive({
   userName: '',
@@ -204,8 +209,6 @@ function handleNodeClick(data) {
 
 function handleQuery() {
 
-
-
 }
 
 function resetQuery() {
@@ -213,11 +216,16 @@ function resetQuery() {
 }
 
 function handleAdd() {
-
+  addUserRef.value.openModal('add');
 }
 
-function handleUpdate() {
+function editRow(row) {
+  addUserRef.value.openModal('edit', row);
+}
 
+function refreshList() {
+  queryParams.value = {};
+  getUserList();
 }
 
 function handleImport() {

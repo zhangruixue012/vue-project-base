@@ -16,6 +16,40 @@
   padding: 10px 20px 0;
 }
 
+.el-dialog .el-dialog__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid #ebeef5;
+  background-color: #f8f8f8;
+  border-radius: 4px 4px 0 0;
+  padding: 0 14px;
+  height: 43px;
+  margin: 0;
+}
+
+.el-dialog .el-dialog__header .el-dialog__title {
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+.el-dialog .el-dialog__header .el-dialog__headerbtn {
+  top: 0;
+  height: 43px;
+  width: 43px;
+}
+
+.el-dialog__headerbtn .el-dialog__close {
+  color: #505155;
+  font-weight: 900;
+  font-size: 18px;
+  top: 3px;
+}
+
+
+
+
 .el-table {
   thead {
     color: #909399;

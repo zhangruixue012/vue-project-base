@@ -17,3 +17,18 @@ export function changeUserStatus(params) {
     })
 }
 
+export function addUser(data) {
+    return request({
+        url: '/system/user/addUser',
+        method: 'post',
+        data
+    })
+}
+
+export function updateUser(data) {
+    return request({
+        url: '/system/user/updateUser',
+        method: 'put',
+        data
+    })
+}
