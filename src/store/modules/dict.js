@@ -11,6 +11,7 @@ const useDictStore = defineStore(
           return null;
         }
         try {
+          console.log('this.dict:', this.dict)
           for (let i = 0; i < this.dict.length; i++) {
             if (this.dict[i].key == _key) {
               return this.dict[i].value;

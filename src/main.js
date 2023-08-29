@@ -14,10 +14,12 @@ import router from './router'
 import SvgIcon from '@/components/SvgIcon'
 
 import '@/assets/styles/index.scss' // global css
-
+import { useDict } from '@/utils/dict'
 import '@/mock/index.js'
 import './permission' // permission control
 
+// 注册指令
+import plugins from './plugins' // plugins
 
 import Table from './components/Table'
 import Pagination from './components/Pagination'
@@ -27,13 +29,14 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+app.use(plugins)
 
 // 全局挂载组件
 app.component(SvgIcon)
 app.component('Table', Table)
 app.component('Pagination', Pagination)
 
-
+app.config.globalProperties.useDict = useDict
 app.config.globalProperties.$moment = moment
 
 // 使用element-plus 并且设置全局的大小

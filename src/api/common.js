@@ -7,3 +7,5 @@ export function queryDeptTree() {
         method: 'get'
     })
 }
+
+

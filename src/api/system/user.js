@@ -8,3 +8,12 @@ export function listUser(params) {
         params
     })
 }
+
+export function changeUserStatus(params) {
+    return request({
+        url: '/system/user/changeStatus',
+        method: 'put',
+        params
+    })
+}
+

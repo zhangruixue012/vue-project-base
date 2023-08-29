@@ -2,6 +2,7 @@ import Mock from "mockjs";
 import router from './mockData/router';
 import deptTree from './mockData/deptTree.json'
 import userList from './mockData/userList.json'
+import userStateList from './mockData/userStateList.json'
 export default [
     {
         url: "/dev-api/getRouters", // 模拟登录的链接
@@ -27,4 +28,21 @@ export default [
             return userList
         }
     },
+    {
+        url: "/system/user/changeStatus", // 修改用户状态
+        method: "put",
+        statusCode: 200,
+        response: () => {
+            return {"msg":"演示模式，不允许操作","code":500}
+        }
+    },
+    {
+        url: "/system/dict/data/type/sys_normal_disable", // 用户状态字典表
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return userStateList
+        }
+
+    }
 ]
