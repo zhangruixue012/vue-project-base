@@ -68,8 +68,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="handleQuery">搜索</el-button>
-          <el-button @click="resetQuery">重置</el-button>
+          <el-button type="primary" @click="getUserList">搜索</el-button>
+          <el-button @click="resetQuery()">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -92,24 +92,24 @@
               v-hasPermi="['system:user:remove']"
           >删除</el-button>
         </el-col>
-        <el-col :span="1.5">
-          <el-button
-              type="info"
-              plain
-              @click="handleImport"
-              size="small"
-              v-hasPermi="['system:user:import']"
-          >导入</el-button>
-        </el-col>
-        <el-col :span="1.5">
-          <el-button
-              type="warning"
-              plain
-              size="small"
-              @click="handleExport"
-              v-hasPermi="['system:user:export']"
-          >导出</el-button>
-        </el-col>
+<!--        <el-col :span="1.5">-->
+<!--          <el-button-->
+<!--              type="info"-->
+<!--              plain-->
+<!--              @click="handleImport"-->
+<!--              size="small"-->
+<!--              v-hasPermi="['system:user:import']"-->
+<!--          >导入</el-button>-->
+<!--        </el-col>-->
+<!--        <el-col :span="1.5">-->
+<!--          <el-button-->
+<!--              type="warning"-->
+<!--              plain-->
+<!--              size="small"-->
+<!--              @click="handleExport"-->
+<!--              v-hasPermi="['system:user:export']"-->
+<!--          >导出</el-button>-->
+<!--        </el-col>-->
       </el-row>
 
       <Table :tableData ="tableData" :columnData="columnData" :pageTotal="pageTotal" :pageParam="page">
@@ -138,10 +138,11 @@
 <script setup>
 import AddUser from './addUser';
 import { queryDeptTree } from "@/api/common";
-import { listUser, changeUserStatus } from '@/api/system/user';
+import { listUser, changeUserStatus, deleteUser } from '@/api/system/user';
 
 const { proxy } = getCurrentInstance();
 const deptName = ref('');
+const queryRef = ref();
 const deptOptions = ref(undefined);
 const tableData = ref([]);
 const addUserRef = ref();
@@ -207,12 +208,8 @@ function handleNodeClick(data) {
   handleQuery();
 }
 
-function handleQuery() {
-
-}
-
 function resetQuery() {
-
+  proxy.resetForm("queryRef");
 }
 
 function handleAdd() {
@@ -224,16 +221,8 @@ function editRow(row) {
 }
 
 function refreshList() {
-  queryParams.value = {};
+  proxy.resetForm("queryRef");
   getUserList();
-}
-
-function handleImport() {
-
-}
-
-function handleExport() {
-
 }
 
 /** 根据名称筛选部门树 */
@@ -265,9 +254,15 @@ function handleEdit() {
 
 }
 
-function handleDelete() {
-
-}
+function handleDelete(row) {
+  const userIds = row.userId || ids.value;
+  proxy.$modal.confirm('是否确认删除用户编号为"' + userIds + '"的数据项？').then(function () {
+    return deleteUser(userIds);
+  }).then(() => {
+    getList();
+    proxy.$modal.msgSuccess("删除成功");
+  }).catch(() => {});
+};
 
 function handleStatusChange(row, index) {
   const { userId, status } = row;
@@ -285,6 +280,7 @@ function handleStatusChange(row, index) {
 function getUserList() {
   loading.value = true;
   const param = {
+    ...queryParams,
     ...page
   }
   listUser(param).then(res => {

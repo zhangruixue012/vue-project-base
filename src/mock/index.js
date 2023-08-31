@@ -1,9 +1,10 @@
 import Mock from "mockjs";
-import router from './mockData/router';
-import deptTree from './mockData/deptTree.json'
-import userList from './mockData/userList.json'
-import userStateList from './mockData/userStateList.json'
-import userSex from './mockData/userSex.json'
+import router from './mockData/user/router.json';
+import deptTree from './mockData/user/deptTree.json'
+import userList from './mockData/user/userList.json'
+import userStateList from './mockData/user/userStateList.json'
+import userSex from './mockData/user/userSex.json'
+import userOptions from './mockData/user/userOptions.json'
 export default [
     {
         url: "/dev-api/getRouters", // 模拟登录的链接
@@ -68,5 +69,15 @@ export default [
         response: () => {
             return {"msg":"修改成功","code":200}
         }
-    }
+    },
+    {
+        url: "/system/userOptions", // 用户岗位下拉 && 角色下拉
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return userOptions
+        }
+    },
+
+
 ]

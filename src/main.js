@@ -15,6 +15,7 @@ import SvgIcon from '@/components/SvgIcon'
 
 import '@/assets/styles/index.scss' // global css
 import { useDict } from '@/utils/dict'
+import { resetForm } from '@/utils/ruoyi'
 import '@/mock/index.js'
 import './permission' // permission control
 
@@ -38,6 +39,7 @@ app.component('Pagination', Pagination)
 
 app.config.globalProperties.useDict = useDict
 app.config.globalProperties.$moment = moment
+app.config.globalProperties.resetForm = resetForm
 
 // 使用element-plus 并且设置全局的大小
 app.use(ElementPlus, {

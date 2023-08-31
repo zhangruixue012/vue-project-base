@@ -74,7 +74,7 @@
       <el-row>
         <el-col :span="12">
           <el-form-item label="岗位">
-            <el-select v-model="form.postIds" multiple placeholder="请选择" style="width: 200px">
+            <el-select v-model="form.postIds" placeholder="请选择" style="width: 200px">
               <el-option
                   v-for="item in postOptions"
                   :key="item.postId"
@@ -87,7 +87,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="角色">
-            <el-select v-model="form.roleIds" multiple placeholder="请选择" style="width: 200px">
+            <el-select v-model="form.roleIds" placeholder="请选择" style="width: 200px">
               <el-option
                   v-for="item in roleOptions"
                   :key="item.roleId"
@@ -119,7 +119,7 @@
 </template>
 
 <script setup>
-import { addUser, updateUser } from "@/api/system/user";
+import { addUser, updateUser, userOptions } from "@/api/system/user";
 import { queryDeptTree } from "@/api/common";
 
 const userRef = ref();
@@ -129,8 +129,8 @@ const emit = defineEmits()
 const title = ref('新增');
 const open = ref(false);
 const deptOptions = ref([]);
-const postOptions = reactive([]);
-const roleOptions = reactive([]);
+const postOptions = ref([]);
+const roleOptions = ref([]);
 const { sys_user_sex } = proxy.useDict('sys_user_sex');
 const { sys_normal_disable } = proxy.useDict('sys_normal_disable');
 
@@ -165,8 +165,8 @@ function reset() {
     sex: undefined,
     status: "0",
     remark: undefined,
-    postIds: [],
-    roleIds: []
+    postIds: undefined,
+    roleIds: undefined
   };
   proxy.resetForm("userRef");
 };
@@ -175,6 +175,7 @@ function openModal(type, rowData) {
   open.value = true;
   getDeptTree();
   reset();
+  getUserOption();
 
   if (type === 'add') {
     title.value = '新增'
@@ -183,35 +184,44 @@ function openModal(type, rowData) {
 
   if (type === 'edit') {
     title.value = '修改'
-    const { id, nickName, deptId, phoneNumber, email, userName, password, sex, status, postIds, roleIds, remark } = rowData
+    const { id, nickName, deptId, phoneNumber, email, userName, password, sex, status, postIds, roleIds, remark } = rowData.row
     Object.assign(form.value, {
       id, nickName, deptId, phoneNumber, email, userName, password, sex, status, postIds, roleIds, remark
     })
-
     return;
   }
-
-
 }
 
 const submitForm = async (formEl) => {
   if (!formEl) return;
 
   formEl.validate(async (valid, fields) => {
-    if (form.value.id != undefined) {
-      updateUser(form.value).then(response => {
-        proxy.$message.success("修改成功");
-        open.value = false;
-        getList();
-      });
-    } else {
-      addUser(form.value).then(response => {
-        proxy.$message.success("新增成功");
-        open.value = false;
-        getList();
-      });
+    if (valid) {
+      if (form.value.id != undefined) {
+        updateUser(form.value).then(response => {
+          proxy.$message.success("修改成功");
+          open.value = false;
+          getList();
+        });
+      } else {
+        addUser(form.value).then(response => {
+          proxy.$message.success("新增成功");
+          open.value = false;
+          getList();
+        });
+      }
     }
+
   })
+}
+
+async function getUserOption() {
+  const res = await userOptions();
+  postOptions.value = res.posts;
+  console.log(postOptions.value);
+  roleOptions.value = res.roles;
+  console.log(roleOptions.value);
+
 }
 
 function getList() {
@@ -219,7 +229,7 @@ function getList() {
 }
 
 function cancel() {
-
+  open.value = false;
 }
 
 

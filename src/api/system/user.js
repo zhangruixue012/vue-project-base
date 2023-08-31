@@ -32,3 +32,18 @@ export function updateUser(data) {
         data
     })
 }
+
+export function deleteUser(ids) {
+    return request({
+        url: `/system/user/${ids}`,
+        method: 'get',
+    })
+}
+
+export function userOptions(params) {
+    return request({
+        url: '/system/userOptions',
+        method: 'get',
+        params
+    })
+}
