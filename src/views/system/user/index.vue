@@ -27,7 +27,7 @@
               placeholder="请输入用户名称"
               clearable
               style="width: 200px"
-              @keyup.enter="handleQuery"
+              @keyup.enter="handleCurrentChange(1)"
           />
         </el-form-item>
         <el-form-item label="手机号码" prop="phoneNumber">
@@ -36,7 +36,7 @@
               placeholder="请输入手机号码"
               clearable
               style="width: 200px"
-              @keyup.enter="handleQuery"
+              @keyup.enter="handleCurrentChange(1)"
           />
         </el-form-item>
         <el-form-item label="状态" prop="status">

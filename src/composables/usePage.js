@@ -36,16 +36,16 @@ export function usePage(opts){
     }
 
     function getList() {
-        console.log('usePage的：queryParams:', searchForm)
         const opts = {
             ...page,
+            total: undefined,
             ...searchForm,
             ...customQueryParameters
         }
 
         getListApi(opts).then((res) => {
             if (res.code === 200) {
-                tableData.value = res.data?.rows || []
+                tableData.value = res?.rows || []
                 page.total = res.data?.total || 0
 
                 getListFunc(opts)
