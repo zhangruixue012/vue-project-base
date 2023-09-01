@@ -68,8 +68,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="getUserList">搜索</el-button>
-          <el-button @click="resetQuery()">重置</el-button>
+          <el-button type="primary" @click="handleCurrentChange(1)">搜索</el-button>
+          <el-button @click="refreshList()">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -112,7 +112,8 @@
 <!--        </el-col>-->
       </el-row>
 
-      <Table :tableData ="tableData" :columnData="columnData" :pageTotal="pageTotal" :pageParam="page">
+      <Table :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
+             @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
         <!--   #status == v-slot:status     -->
         <template #status="{ data }">
           <el-switch
@@ -139,14 +140,14 @@
 import AddUser from './addUser';
 import { queryDeptTree } from "@/api/common";
 import { listUser, changeUserStatus, deleteUser } from '@/api/system/user';
+import { usePage } from '@/composables/usePage'
 
 const { proxy } = getCurrentInstance();
 const deptName = ref('');
 const queryRef = ref();
 const deptOptions = ref(undefined);
-const tableData = ref([]);
 const addUserRef = ref();
-const loading = ref(false);
+
 const queryParams = reactive({
   userName: '',
   phoneNumber: '',
@@ -154,14 +155,15 @@ const queryParams = reactive({
   deptId: '',
   dateRange: []
 })
+
+// 接收 查询参数、获取列表的接口 返回 列表所需要的数据、分页参数、分页函数等
+const { reset, page, tableData, handleSizeChange, handleCurrentChange, getListFunc } = usePage({
+  searchForm: queryParams,
+  getListApi: listUser
+})
+
 const { sys_normal_disable } = proxy.useDict('sys_normal_disable');
 
-const pageTotal = ref(0);
-
-const page = reactive({
-  currentPage: 1,
-  pageSize: 20
-})
 
 const columnData = reactive([
   {
@@ -205,11 +207,7 @@ const columnData = reactive([
 
 function handleNodeClick(data) {
   queryParams.value.deptId = data.id;
-  handleQuery();
-}
-
-function resetQuery() {
-  proxy.resetForm("queryRef");
+  handleCurrentChange(1);
 }
 
 function handleAdd() {
@@ -222,7 +220,7 @@ function editRow(row) {
 
 function refreshList() {
   proxy.resetForm("queryRef");
-  getUserList();
+  reset()
 }
 
 /** 根据名称筛选部门树 */
@@ -250,10 +248,6 @@ function getDeptTree() {
   });
 }
 
-function handleEdit() {
-
-}
-
 function handleDelete(row) {
   const userIds = row.userId || ids.value;
   proxy.$modal.confirm('是否确认删除用户编号为"' + userIds + '"的数据项？').then(function () {
@@ -277,21 +271,8 @@ function handleStatusChange(row, index) {
   });
 };
 
-function getUserList() {
-  loading.value = true;
-  const param = {
-    ...queryParams,
-    ...page
-  }
-  listUser(param).then(res => {
-    loading.value = false;
-    tableData.value = res.rows;
-    pageTotal.value = res.total;
-  });
-}
-
 getDeptTree();
-getUserList();
+reset();
 
 </script>
 

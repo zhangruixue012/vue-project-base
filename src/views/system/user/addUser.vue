@@ -200,12 +200,14 @@ const submitForm = async (formEl) => {
       if (form.value.id != undefined) {
         updateUser(form.value).then(response => {
           proxy.$message.success("修改成功");
+          proxy.resetForm("userRef");
           open.value = false;
           getList();
         });
       } else {
         addUser(form.value).then(response => {
           proxy.$message.success("新增成功");
+          proxy.resetForm("userRef");
           open.value = false;
           getList();
         });
@@ -218,9 +220,7 @@ const submitForm = async (formEl) => {
 async function getUserOption() {
   const res = await userOptions();
   postOptions.value = res.posts;
-  console.log(postOptions.value);
   roleOptions.value = res.roles;
-  console.log(roleOptions.value);
 
 }
 

@@ -44,8 +44,8 @@
       :page-sizes="[10, 20, 30, 40]"
       layout="total, sizes, prev, pager, next, jumper"
       :total="pageTotal"
-      @size-change="onSizeChange"
-      @current-change="onCurrentChange"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
   />
 </template>
 
@@ -72,18 +72,14 @@ defineProps({
     type: Boolean,
     default: true
   },
-  pageTotal: Number
+  pageTotal: Number,
+  handleSizeChange: {
+    type: Function,
+    default: () => {}
+  },
+  handleCurrentChange: {
+    type: Function,
+    default: () => {}
+  }
 })
-
-function onSizeChange() {
-
-}
-
-function onCurrentChange() {
-
-}
-
-function handleDelete() {
-
-}
 </script>
