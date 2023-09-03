@@ -28,6 +28,7 @@
 </template>
 
 <script setup>
+
 import { isExternal } from '@/utils/validate'
 import AppLink from './Link.vue'
 import { getNormalPath } from '@/utils/ruoyi'

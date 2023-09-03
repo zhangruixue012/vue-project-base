@@ -5,7 +5,7 @@
           :default-active="activeMenu"
           :collapse="isCollapse"
           :unique-opened="true"
-          :active-text-color="theme"
+          :active-text-color="variables.sideBarActiveMenuFont"
           :collapse-transition="false"
           mode="vertical"
       >
@@ -24,19 +24,16 @@
 import useAppStore from '@/store/modules/app'
 import SidebarItem from './SidebarItem'
 
-// import variables from '@/assets/styles/variables.module.scss'
-import useSettingsStore from '@/store/modules/settings'
+import variables from '@/assets/styles/variables.module.scss'
 import usePermissionStore from '@/store/modules/permission'
 
 const route = useRoute();
 const appStore = useAppStore()
-const settingsStore = useSettingsStore()
 const permissionStore = usePermissionStore()
 
 const sidebarRouters =  computed(() => permissionStore.sidebarRouters);
 
 
-const theme = computed(() => settingsStore.theme);
 const activeMenu = computed(() => {
   const { meta, path } = route;
   // if set path, the sidebar will highlight the path you set

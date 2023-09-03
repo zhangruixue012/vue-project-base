@@ -45,6 +45,7 @@ $--color-info: #909399;
 $base-sidebar-width: 200px;
 $top-nav-height: 80px;
 $side-bar-active-menu: rgba(6, 92, 211, 0.82);
+$side-bar-active-menu-font: #fff;
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
@@ -66,6 +67,7 @@ $side-bar-active-menu: rgba(6, 92, 211, 0.82);
   warningColor: $--color-warning;
   toNavHeight: $top-nav-height;
   sideBarActiveMenu: $side-bar-active-menu;
+  sideBarActiveMenuFont: $side-bar-active-menu-font;
 }
 
 
