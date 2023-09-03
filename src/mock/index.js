@@ -1,11 +1,18 @@
 import Mock from "mockjs";
+
+// const moduleFiles = require.context('./mockData', true, /\.json/);
+//
+// const mocks = moduleFiles.keys().reduce((modules, item) => {
+//     return [...modules, ...moduleFiles(item).default]
+// }, [])
+
 import router from './mockData/user/router.json';
-import deptTree from './mockData/user/deptTree.json'
+import deptTree from './mockData/deptTree.json'
 import userList from './mockData/user/userList.json'
 import userStateList from './mockData/user/userStateList.json'
 import userSex from './mockData/user/userSex.json'
 import userOptions from './mockData/user/userOptions.json'
-import roleList from './mockData/role/roleList.json'
+import roleList from './mockData/roleList.json'
 export default [
     {
         url: "/dev-api/getRouters", // 模拟登录的链接

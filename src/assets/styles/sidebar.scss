@@ -1,7 +1,7 @@
 #app {
 
   .main-container {
-    height: calc(100% - 90px);
+    height: calc(100% - 80px);
     transition: margin-left .28s;
     margin-left: $base-sidebar-width;
     position: relative;
@@ -15,10 +15,10 @@
     -webkit-transition: width 0.28s;
     transition: width 0.28s;
     width: $base-sidebar-width !important;
-    height: calc(100% - 90px);
+    height: calc(100% - 80px);
     position: fixed;
     font-size: 0px;
-    top: 90px;
+    top: $top-nav-height;
     bottom: 0;
     left: 0;
     z-index: 1001;
@@ -75,6 +75,10 @@
       white-space: nowrap !important;
     }
 
+    .el-menu-item.is-active {
+      background-color: $side-bar-active-menu
+    }
+
     .el-menu-item .el-menu-tooltip__trigger {
       display: inline-block !important;
     }
@@ -89,6 +93,7 @@
 
     & .theme-dark .is-active > .el-sub-menu__title {
       color: $base-menu-color-active !important;
+      background-color: rgba(6, 92, 211, 0.82) !important;
     }
 
     & .nest-menu .el-sub-menu>.el-sub-menu__title,

@@ -29,8 +29,6 @@ const classObj = computed(() => ({
 
 
 const route = useRoute()
-
-
 </script>
 
 
