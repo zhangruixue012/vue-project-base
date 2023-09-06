@@ -13,9 +13,12 @@
 export function usePage(opts){
     // searchForm 由外部传入，内部传入导出的数据无法推导类型即无法知道对象里有什么也会失去代码提示
     const {
+        proxy = {},
         searchForm = {},
         getListApi,
+        removeApi,
         customQueryParameters = {},
+        addModalRef,
         getListFunc = (opts) => {},
         resetFunc = () => {},
         sizeChangeFunc = () => {},
@@ -27,7 +30,11 @@ export function usePage(opts){
         pageNo: 1,
         total: 0
     })
-    const tableData = ref([])
+    const tableData = ref([]);
+
+    const tableRef = ref();
+
+    const multipleSelection = ref([])
 
     function reset() {
         // Object.assign(searchForm, resetObjToPrimitiveType(searchForm))
@@ -46,14 +53,23 @@ export function usePage(opts){
         getListApi(opts).then((res) => {
             if (res.code === 200) {
                 tableData.value = res?.rows || []
-                page.total = res.data?.total || 0
+                page.total = res?.total || 0
 
                 getListFunc(opts)
             }
         })
     }
 
+    function handleAdd() {
+        addModalRef.value.openModal('add');
+    }
+
+    function editRow(row) {
+        addModalRef.value.openModal('edit', row);
+    }
+
     function handleSizeChange(size) {
+        console.log('handleSizeChange:', size)
         page.pageSize = size
         sizeChangeFunc()
         getList()
@@ -65,13 +81,39 @@ export function usePage(opts){
         getList()
     }
 
+    function handleSelectionChange(val) {
+        console.log('val:', val);
+        multipleSelection.value = val
+    }
+
+    function handleDelete() {
+        if (multipleSelection.value.length == 0) {
+            return proxy.$message.warning("请至少选择一条要删除的数据！");
+        }
+        let ids = multipleSelection.value.map((item) => item.id);
+        proxy.$modal
+            .confirm("是否确认删除" + ids.length + "条数据项？")
+            .then(() => {
+                removeApi().then(res => {
+                    getList()
+                })
+            })
+            .then(() => { })
+            .catch(() => { });
+    }
+
     return {
         searchForm,
         reset,
         page,
         tableData,
         handleSizeChange,
-        handleCurrentChange
+        handleCurrentChange,
+        handleSelectionChange,
+        handleDelete,
+        tableRef,
+        handleAdd,
+        editRow
     }
 
 

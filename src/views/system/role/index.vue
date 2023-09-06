@@ -92,8 +92,9 @@
       <!--        </el-col>-->
     </el-row>
 
-    <Table :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
-           @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
+    <Table ref="tableRef" :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
+           :handleSizeChange="handleSizeChange" :handleCurrentChange="handleCurrentChange"
+            :handleSelectionChange="handleSelectionChange">
       <!--   #status == v-slot:status     -->
       <template #status="{ data }">
         <el-switch
@@ -116,7 +117,7 @@
 </template>
 
 <script setup>
-import { listRole } from '@/api/system/role';
+import { listRole, removeRole } from '@/api/system/role';
 import { usePage } from '@/composables/usePage'
 
 const { proxy } = getCurrentInstance();
@@ -131,9 +132,12 @@ const queryParams = reactive({
 })
 
 // 接收 查询参数、获取列表的接口 返回 列表所需要的数据、分页参数、分页函数等
-const { reset, page, tableData, handleSizeChange, handleCurrentChange, getListFunc } = usePage({
+const { reset, page, tableData, handleSizeChange, handleCurrentChange, tableRef, handleDelete, handleSelectionChange, handleAdd, editRow } = usePage({
   searchForm: queryParams,
-  getListApi: listRole
+  getListApi: listRole,
+  removeApi: removeRole,
+  proxy,
+  addModalRef: addUserRef
 })
 
 const { sys_normal_disable } = proxy.useDict('sys_normal_disable');
@@ -175,28 +179,10 @@ const columnData = reactive([
   },
 ])
 
-function handleAdd() {
-  addUserRef.value.openModal('add');
-}
-
-function editRow(row) {
-  addUserRef.value.openModal('edit', row);
-}
-
 function refreshList() {
   proxy.resetForm("queryRef");
   reset()
 }
-
-function handleDelete(row) {
-  const userIds = row.userId || ids.value;
-  proxy.$modal.confirm('是否确认删除用户编号为"' + userIds + '"的数据项？').then(function () {
-    return deleteUser(userIds);
-  }).then(() => {
-    getList();
-    proxy.$modal.msgSuccess("删除成功");
-  }).catch(() => {});
-};
 
 function handleStatusChange(row, index) {
   const { userId, status } = row;

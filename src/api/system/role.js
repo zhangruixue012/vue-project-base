@@ -8,3 +8,13 @@ export function listRole(params) {
         params
     })
 }
+
+
+export function removeRole(params) {
+    return request({
+        url: '/system/role/remove',
+        method: 'get',
+        params
+    })
+}
+

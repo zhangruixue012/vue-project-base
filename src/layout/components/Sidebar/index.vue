@@ -28,10 +28,10 @@ import variables from '@/assets/styles/variables.module.scss'
 import usePermissionStore from '@/store/modules/permission'
 
 const route = useRoute();
-const appStore = useAppStore()
-const permissionStore = usePermissionStore()
+const appStore = useAppStore();
+const permissionStore = usePermissionStore();
 
-const sidebarRouters =  computed(() => permissionStore.sidebarRouters);
+const sidebarRouters = computed(() => permissionStore.sidebarRouters);
 
 
 const activeMenu = computed(() => {
