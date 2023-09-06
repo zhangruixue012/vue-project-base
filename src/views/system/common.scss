@@ -5,4 +5,36 @@
   }
 }
 
+.search-header {
+  :deep(.el-form-item) {
+    margin-right: 12px;
+  }
+
+  :deep(.el-form-item__label) {
+    font-weight: 700;
+  }
+}
+
+.manage-container {
+  padding: 20px;
+  height: 100%;
+}
+
+
+.user-manage-container {
+  padding: 20px;
+  display: flex;
+  height: 100%;
+
+  .left-container {
+    width: 200px;
+    margin-right: 15px;
+  }
+
+  .right-container {
+    width: calc(100% - 215px);
+  }
+
+}
+
 

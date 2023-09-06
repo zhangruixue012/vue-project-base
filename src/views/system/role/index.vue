@@ -3,44 +3,7 @@
     <search-form ref="searchFormRef" :searchKeyList="searchKeyList" :handleCurrentChange="handleCurrentChange"
                  :reset="reset" :queryParams="queryParams"/>
 
-    <el-row :gutter="10" class="operate-table">
-      <el-col :span="1.5">
-        <el-button
-            type="primary"
-            plain
-            size="small"
-            @click="handleAdd"
-            v-hasPermi="['system:user:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-            type="danger"
-            plain
-            size="small"
-            @click="handleDelete"
-            v-hasPermi="['system:user:remove']"
-        >删除</el-button>
-      </el-col>
-      <!--        <el-col :span="1.5">-->
-      <!--          <el-button-->
-      <!--              type="info"-->
-      <!--              plain-->
-      <!--              @click="handleImport"-->
-      <!--              size="small"-->
-      <!--              v-hasPermi="['system:user:import']"-->
-      <!--          >导入</el-button>-->
-      <!--        </el-col>-->
-      <!--        <el-col :span="1.5">-->
-      <!--          <el-button-->
-      <!--              type="warning"-->
-      <!--              plain-->
-      <!--              size="small"-->
-      <!--              @click="handleExport"-->
-      <!--              v-hasPermi="['system:user:export']"-->
-      <!--          >导出</el-button>-->
-      <!--        </el-col>-->
-    </el-row>
+    <operate-row :operateList="operateList"/>
 
     <Table ref="tableRef" :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
            :handleSizeChange="handleSizeChange" :handleCurrentChange="handleCurrentChange"
@@ -70,6 +33,7 @@
 import { listRole, removeRole } from '@/api/system/role';
 import { usePage } from '@/composables/usePage'
 import SearchForm from '@/components/SearchForm/index'
+import OperateRow from '@/components/OperateRow/index'
 
 const { proxy } = getCurrentInstance();
 const addUserRef = ref();
@@ -83,6 +47,11 @@ const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, 
   removeApi: removeRole,
   proxy
 })
+
+const operateList = reactive([
+  { type: 'add' },
+  { type: 'delete'}
+])
 
 const { sys_normal_disable } = proxy.useDict('sys_normal_disable');
 
@@ -157,25 +126,5 @@ reset();
 
 <style lang="scss" scoped>
 @import "../common.scss";
-.manage-container {
-  padding: 20px;
-  height: 100%;
-
-  .search-header {
-    :deep(.el-form-item) {
-      margin-right: 12px;
-    }
-
-    :deep(.el-form-item__label) {
-      font-weight: 700;
-    }
-  }
-
-  .operate-table {
-    margin-bottom: 12px;
-  }
-
-
-}
 
 </style>

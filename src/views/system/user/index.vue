@@ -1,5 +1,5 @@
 <template>
-  <div class="manage-container">
+  <div class="user-manage-container">
     <div class="left-container">
       <el-input class="search-tree"
           v-model="deptName"
@@ -24,44 +24,7 @@
       <search-form ref="searchFormRef" :searchKeyList="searchKeyList" :handleCurrentChange="handleCurrentChange"
                    :reset="reset" :queryParams="queryParams"/>
 
-      <el-row :gutter="10" class="operate-table">
-        <el-col :span="1.5">
-          <el-button
-              type="primary"
-              plain
-              size="small"
-              @click="handleAdd"
-              v-hasPermi="['system:user:add']"
-          >新增</el-button>
-        </el-col>
-        <el-col :span="1.5">
-          <el-button
-              type="danger"
-              plain
-              size="small"
-              @click="handleDelete"
-              v-hasPermi="['system:user:remove']"
-          >删除</el-button>
-        </el-col>
-<!--        <el-col :span="1.5">-->
-<!--          <el-button-->
-<!--              type="info"-->
-<!--              plain-->
-<!--              @click="handleImport"-->
-<!--              size="small"-->
-<!--              v-hasPermi="['system:user:import']"-->
-<!--          >导入</el-button>-->
-<!--        </el-col>-->
-<!--        <el-col :span="1.5">-->
-<!--          <el-button-->
-<!--              type="warning"-->
-<!--              plain-->
-<!--              size="small"-->
-<!--              @click="handleExport"-->
-<!--              v-hasPermi="['system:user:export']"-->
-<!--          >导出</el-button>-->
-<!--        </el-col>-->
-      </el-row>
+      <operate-row :operateList="operateList"/>
 
       <Table :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
              :handleSizeChange="handleSizeChange" :handleCurrentChange="handleCurrentChange"
@@ -91,6 +54,7 @@
 <script setup>
 import AddUser from './addUser';
 import SearchForm from '@/components/SearchForm/index'
+import OperateRow from '@/components/OperateRow/index'
 import { queryDeptTree } from "@/api/common";
 import { listUser, changeUserStatus, deleteUser } from '@/api/system/user';
 import { usePage } from '@/composables/usePage'
@@ -101,6 +65,22 @@ const deptOptions = ref(undefined);
 const addUserRef = ref();
 const searchFormRef = ref();
 
+const operateList = reactive([
+  {
+    type: 'add'
+  },
+  {
+    type: 'delete'
+  },
+  {
+    type: 'import',
+    importApi: ''
+  },
+  {
+    type: 'export',
+    exportApi: ''
+  }
+])
 
 // 接收 查询参数、获取列表的接口 返回 列表所需要的数据、分页参数、分页函数等
 const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, deleteRow, handleAdd, handleDelete,
@@ -220,35 +200,4 @@ reset();
 
 <style lang="scss" scoped>
 @import "../common.scss";
-.manage-container {
-  padding: 20px;
-  display: flex;
-  height: 100%;
-
-  .left-container {
-    width: 200px;
-    margin-right: 15px;
-  }
-
-  .right-container {
-    width: calc(100% - 215px);
-  }
-
-  .search-header {
-    :deep(.el-form-item) {
-      margin-right: 12px;
-    }
-
-    :deep(.el-form-item__label) {
-      font-weight: 700;
-    }
-  }
-
-  .operate-table {
-    margin-bottom: 12px;
-  }
-
-
-}
-
 </style>
