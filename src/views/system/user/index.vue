@@ -20,58 +20,9 @@
     </div>
 
     <div class="right-container">
-      <el-form class="search-header" :model="queryParams" ref="queryRef" :inline="true">
-        <el-form-item label="用户名称" prop="userName">
-          <el-input
-              v-model="queryParams.userName"
-              placeholder="请输入用户名称"
-              clearable
-              style="width: 200px"
-              @keyup.enter="handleCurrentChange(1)"
-          />
-        </el-form-item>
-        <el-form-item label="手机号码" prop="phoneNumber">
-          <el-input
-              v-model="queryParams.phoneNumber"
-              placeholder="请输入手机号码"
-              clearable
-              style="width: 200px"
-              @keyup.enter="handleCurrentChange(1)"
-          />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select
-              v-model="queryParams.status"
-              placeholder="用户状态"
-              clearable
-              style="width: 150px"
-          >
-            <el-option
-                v-for="dict in sys_normal_disable"
-                :key="dict.value"
-                :label="dict.label"
-                :value="dict.value"
-            />
-          </el-select>
-        </el-form-item>
 
-        <el-form-item label="创建时间" prop="dateRange" >
-          <el-date-picker
-              v-model="queryParams.dateRange"
-              value-format="YYYY-MM-DD"
-              type="daterange"
-              range-separator="-"
-              style="width: 280px"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-          ></el-date-picker>
-        </el-form-item>
-
-        <el-form-item>
-          <el-button type="primary" @click="handleCurrentChange(1)">搜索</el-button>
-          <el-button @click="refreshList()">重置</el-button>
-        </el-form-item>
-      </el-form>
+      <search-form ref="searchFormRef" :searchKeyList="searchKeyList" :handleCurrentChange="handleCurrentChange"
+                   :reset="reset" :queryParams="queryParams"/>
 
       <el-row :gutter="10" class="operate-table">
         <el-col :span="1.5">
@@ -126,7 +77,7 @@
 
         <template #event="{ data }">
           <el-button text type="primary" @click="editRow(data)" size="small" class="table-operate-btn">修改</el-button>
-          <el-button text type="primary" size="small" class="table-operate-btn">删除</el-button>
+          <el-button text type="primary" size="small" class="table-operate-btn" @click="deleteRow(data)">删除</el-button>
           <el-button text type="primary" size="small" class="table-operate-btn">重置密码</el-button>
           <el-button text type="primary" size="small" class="table-operate-btn">分配角色</el-button>
         </template>
@@ -139,27 +90,21 @@
 
 <script setup>
 import AddUser from './addUser';
+import SearchForm from '@/components/SearchForm/index'
 import { queryDeptTree } from "@/api/common";
 import { listUser, changeUserStatus, deleteUser } from '@/api/system/user';
 import { usePage } from '@/composables/usePage'
 
 const { proxy } = getCurrentInstance();
 const deptName = ref('');
-const queryRef = ref();
 const deptOptions = ref(undefined);
 const addUserRef = ref();
+const searchFormRef = ref();
 
-const queryParams = reactive({
-  userName: '',
-  phoneNumber: '',
-  status: '',
-  deptId: '',
-  dateRange: []
-})
 
 // 接收 查询参数、获取列表的接口 返回 列表所需要的数据、分页参数、分页函数等
-const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, handleAdd, handleDelete, handleSelectionChange } = usePage({
-  searchForm: queryParams,
+const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, deleteRow, handleAdd, handleDelete,
+  handleSelectionChange, generateQueryParams, queryParams } = usePage({
   getListApi: listUser,
   addModalRef: addUserRef,
   removeApi: deleteUser,
@@ -167,7 +112,6 @@ const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, 
 })
 
 const { sys_normal_disable } = proxy.useDict('sys_normal_disable');
-
 
 const columnData = reactive([
   {
@@ -209,14 +153,38 @@ const columnData = reactive([
   },
 ])
 
+const searchKeyList = reactive([
+  {
+    key: 'userName',
+    name: '用户名称',
+    type: 'input'
+  },
+  {
+    key: 'phoneNumber',
+    name: '手机号码',
+    type: 'input'
+  },
+  {
+    key: 'status',
+    name: '用户状态',
+    type: 'select',
+    optionList: sys_normal_disable
+  },
+  {
+    key: 'dateRange',
+    name: '创建时间',
+    type: 'dateRange',
+    valueFormat: 'YYYY-MM-DD'
+  }
+])
+
 function handleNodeClick(data) {
   queryParams.value.deptId = data.id;
   handleCurrentChange(1);
 }
 
 function refreshList() {
-  proxy.resetForm("queryRef");
-  reset()
+  searchFormRef.value.resetForm();
 }
 
 /** 根据名称筛选部门树 */
@@ -244,19 +212,7 @@ function getDeptTree() {
   });
 }
 
-function handleStatusChange(row, index) {
-  const { userId, status } = row;
-  let text = row.status === "0" ? "启用" : "停用";
-  proxy.$modal.confirm('确认要"' + text + '""' + row.userName + '"用户吗?').then(function () {
-    const param = { userId, status }
-    return changeUserStatus(param);
-  }).then(() => {
-    proxy.$modal.msgSuccess(text + "成功");
-  }).catch(function () {
-    row.status = row.status === "0" ? "1" : "0";
-  });
-};
-
+generateQueryParams();
 getDeptTree();
 reset();
 

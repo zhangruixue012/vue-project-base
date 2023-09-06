@@ -11,10 +11,8 @@
  */
 
 export function usePage(opts){
-    // searchForm 由外部传入，内部传入导出的数据无法推导类型即无法知道对象里有什么也会失去代码提示
     const {
         proxy = {},
-        searchForm = {},
         getListApi,
         removeApi,
         customQueryParameters = {},
@@ -22,7 +20,8 @@ export function usePage(opts){
         getListFunc = (opts) => {},
         resetFunc = () => {},
         sizeChangeFunc = () => {},
-        currentChangeFunc = () => {}
+        currentChangeFunc = () => {},
+        searchKeyList = [],
     } = opts
 
     const page = reactive({
@@ -36,8 +35,16 @@ export function usePage(opts){
 
     const multipleSelection = ref([])
 
+    const queryParams = reactive({})
+    function generateQueryParams() {
+        searchKeyList.forEach(item => {
+            Object.assign(queryParams, {
+                [item.key]: item.type === 'dateRange' ? [] : ''
+            })
+        })
+    }
+
     function reset() {
-        // Object.assign(searchForm, resetObjToPrimitiveType(searchForm))
         resetFunc()
         handleCurrentChange(1)
     }
@@ -46,7 +53,7 @@ export function usePage(opts){
         const opts = {
             ...page,
             total: undefined,
-            ...searchForm,
+            ...queryParams,
             ...customQueryParameters
         }
 
@@ -68,8 +75,20 @@ export function usePage(opts){
         addModalRef.value.openModal('edit', row);
     }
 
+    function deleteRow(row) {
+        proxy.$modal
+            .confirm("是否确认删除该条数据项？")
+            .then(() => {
+                const param = { ids: row.id }
+                removeApi(param).then(res => {
+                    getList()
+                })
+            })
+            .then(() => { })
+            .catch(() => { });
+    }
+
     function handleSizeChange(size) {
-        console.log('handleSizeChange:', size)
         page.pageSize = size
         sizeChangeFunc()
         getList()
@@ -90,11 +109,12 @@ export function usePage(opts){
         if (multipleSelection.value.length == 0) {
             return proxy.$message.warning("请至少选择一条要删除的数据！");
         }
-        let ids = multipleSelection.value.map((item) => item.id);
+        let ids = multipleSelection.value.map((item) => item.id).join(',');
         proxy.$modal
             .confirm("是否确认删除" + ids.length + "条数据项？")
             .then(() => {
-                removeApi().then(res => {
+                const param = { ids }
+                removeApi(param).then(res => {
                     getList()
                 })
             })
@@ -103,7 +123,6 @@ export function usePage(opts){
     }
 
     return {
-        searchForm,
         reset,
         page,
         tableData,
@@ -113,7 +132,10 @@ export function usePage(opts){
         handleDelete,
         tableRef,
         handleAdd,
-        editRow
+        editRow,
+        deleteRow,
+        generateQueryParams,
+        queryParams
     }
 
 
