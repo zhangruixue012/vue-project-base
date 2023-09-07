@@ -41,7 +41,7 @@ const searchFormRef = ref();
 
 // 接收 查询参数、获取列表的接口 返回 列表所需要的数据、分页参数、分页函数等
 const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, deleteRow, handleAdd, handleDelete,
-  handleSelectionChange, generateQueryParams, queryParams } = usePage({
+  handleSelectionChange, queryParams } = usePage({
   getListApi: listRole,
   addModalRef: addUserRef,
   removeApi: removeRole,

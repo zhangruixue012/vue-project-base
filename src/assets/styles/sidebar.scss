@@ -69,6 +69,11 @@
       width: 100% !important;
     }
 
+    .el-menu-item {
+      border-left: 4px solid transparent;
+    }
+
+
     .el-menu-item, .menu-title {
       overflow: hidden !important;
       text-overflow: ellipsis !important;
