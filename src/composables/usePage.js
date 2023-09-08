@@ -31,6 +31,8 @@ export function usePage(opts){
     })
     const tableData = ref([]);
 
+    const tableHeight = ref(null)
+
     const tableRef = ref();
 
     const multipleSelection = ref([])
@@ -122,6 +124,13 @@ export function usePage(opts){
             .catch(() => { });
     }
 
+    onMounted(() => {
+        tableHeight.value = window.innerHeight - 272;
+        window.onresize = () => {
+            tableHeight.value = window.innerHeight - 272;
+        }
+    })
+
     return {
         reset,
         page,
@@ -135,7 +144,8 @@ export function usePage(opts){
         editRow,
         deleteRow,
         generateQueryParams,
-        queryParams
+        queryParams,
+        tableHeight
     }
 
 

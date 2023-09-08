@@ -28,7 +28,7 @@
 
       <Table :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
              :handleSizeChange="handleSizeChange" :handleCurrentChange="handleCurrentChange"
-             :handleSelectionChange="handleSelectionChange">
+             :handleSelectionChange="handleSelectionChange" :height="tableHeight">
         <!--   #status == v-slot:status     -->
         <template #status="{ data }">
           <el-switch
@@ -84,7 +84,7 @@ const operateList = reactive([
 
 // 接收 查询参数、获取列表的接口 返回 列表所需要的数据、分页参数、分页函数等
 const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, deleteRow, handleAdd, handleDelete,
-  handleSelectionChange, generateQueryParams, queryParams } = usePage({
+  handleSelectionChange, generateQueryParams, queryParams, tableHeight } = usePage({
   getListApi: listUser,
   addModalRef: addUserRef,
   removeApi: deleteUser,

@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" v-loading="loading" @selection-change="handleSelectionChange" stripe>
+  <el-table :data="tableData" v-loading="loading" @selection-change="handleSelectionChange" :height="height" stripe>
 <!--    <el-table-column label="序号" type="index" width="60" />-->
     <el-table-column align="center" type="selection" width="55" v-if="check"></el-table-column>
 
@@ -84,6 +84,10 @@ defineProps({
   handleSelectionChange: {
     type: Function,
     default: () => {}
+  },
+  height: {
+    type: [String, Number],
+    default: 400
   }
 })
 </script>

@@ -13,6 +13,7 @@ import userStateList from './mockData/user/userStateList.json'
 import userSex from './mockData/user/userSex.json'
 import userOptions from './mockData/user/userOptions.json'
 import roleList from './mockData/roleList.json'
+import menuList from './mockData/menuList.json'
 export default [
     {
         url: "/dev-api/getRouters", // 模拟登录的链接
@@ -92,6 +93,14 @@ export default [
         statusCode: 200,
         response: () => {
             return roleList
+        }
+    },
+    {
+        url: "/system/menu/list", // 菜单列表
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return menuList
         }
     },
 

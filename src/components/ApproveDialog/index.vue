@@ -74,7 +74,6 @@ function onSubmitApproveOk() {
 }
 
 function openApproveDialog(id) {
-
   if (id) {
     approveForm.id = id;
   }
