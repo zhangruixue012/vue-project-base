@@ -35,7 +35,7 @@ const baseURL = import.meta.env.VITE_APP_BASE_API
 const uploadHeaders = reactive({Authorization: 'Bearer ' + getToken()})
 
 const uploadUrl = computed(() => {
-  return baseURL + url
+  return baseURL + props.url
 })
 
 const fileList = ref([])
