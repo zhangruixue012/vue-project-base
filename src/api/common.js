@@ -9,3 +9,11 @@ export function queryDeptTree() {
 }
 
 
+// 删除文件
+export function deleteFile(params) {
+    return request({
+        url: '/payroll/file/deleteFile',
+        method: 'get',
+        params
+    })
+}

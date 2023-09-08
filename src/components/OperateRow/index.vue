@@ -16,14 +16,13 @@
           @click="handleDelete"
       >删除</el-button>
     </el-col>
+
     <el-col :span="1.5" v-if="isOperate('import')">
-      <el-button
-          type="info"
-          plain
-          @click="handleImport"
-          size="small"
-      >导入</el-button>
+      <upload-button :url="uploadUrl" :data="{}" :isDelete="false" :accept="'excel'">
+        <el-button type="success" plain size="small">导入</el-button>
+      </upload-button>
     </el-col>
+
     <el-col :span="1.5" v-if="isOperate('export')">
       <el-button
           type="warning"
@@ -36,6 +35,8 @@
 </template>
 
 <script setup>
+import UploadButton from '@/components/UploadButton'
+
 const props = defineProps({
   handleAdd: {
     type: Function,
@@ -51,12 +52,10 @@ const props = defineProps({
   },
 })
 
+const uploadUrl = ref('https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15')
+
 function isOperate(key) {
   return props.operateList.some(item => item.type === key)
-}
-
-function handleImport() {
-
 }
 
 function handleExport() {
