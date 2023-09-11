@@ -103,7 +103,6 @@ export function usePage(opts){
     }
 
     function handleSelectionChange(val) {
-        console.log('val:', val);
         multipleSelection.value = val
     }
 
@@ -120,14 +119,14 @@ export function usePage(opts){
                     getList()
                 })
             })
-            .then(() => { })
-            .catch(() => { });
+            .then(() => {})
+            .catch(() => {});
     }
 
     onMounted(() => {
-        tableHeight.value = window.innerHeight - 272;
+        tableHeight.value = window.innerHeight - 252;
         window.onresize = () => {
-            tableHeight.value = window.innerHeight - 272;
+            tableHeight.value = window.innerHeight - 252;
         }
     })
 

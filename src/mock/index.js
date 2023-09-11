@@ -14,6 +14,10 @@ import userSex from './mockData/user/userSex.json'
 import userOptions from './mockData/user/userOptions.json'
 import roleList from './mockData/roleList.json'
 import menuList from './mockData/menuList.json'
+import menuTree from './mockData/role/menuTree.json'
+
+
+
 export default [
     {
         url: "/dev-api/getRouters", // 模拟登录的链接
@@ -103,6 +107,30 @@ export default [
             return menuList
         }
     },
+    {
+        url: "/system/menu/treeSelect", // 菜单树
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return menuTree
+        }
+    },
+    {
+        url: "/system/role/addRole", // 新增角色
+        method: "post",
+        statusCode: 200,
+        response: () => {
+            return {"msg":"角色新增成功","code":200}
+        }
+    },
+    {
+        url: "/system/role/updateRole", // 修改角色
+        method: "put",
+        statusCode: 200,
+        response: () => {
+            return {"msg":"角色修改成功","code":200}
+        }
+    }
 
 
 ]

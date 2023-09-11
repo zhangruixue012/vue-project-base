@@ -72,4 +72,8 @@ function resetForm() {
   props.reset()
 }
 
+defineExpose({
+  resetForm
+});
+
 </script>

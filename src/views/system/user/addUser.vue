@@ -121,6 +121,7 @@
 <script setup>
 import { addUser, updateUser, userOptions } from "@/api/system/user";
 import { queryDeptTree } from "@/api/common";
+import { useAddModal } from "@/composables/useAddModal"
 
 const userRef = ref();
 const { proxy } = getCurrentInstance();
@@ -146,6 +147,16 @@ const data = reactive({
 });
 
 const { form, rules } = toRefs(data);
+
+const { submitForm } = useAddModal({
+  modalFormRef: 'roleRef',
+  formData: form,
+  addApi: addUser,
+  updateApi: updateUser,
+  refreshList,
+  cancel,
+  proxy
+})
 
 function getDeptTree() {
   queryDeptTree().then(res => {
@@ -192,31 +203,6 @@ function openModal(type, rowData) {
   }
 }
 
-const submitForm = async (formEl) => {
-  if (!formEl) return;
-
-  formEl.validate(async (valid, fields) => {
-    if (valid) {
-      if (form.value.id != undefined) {
-        updateUser(form.value).then(response => {
-          proxy.$message.success("修改成功");
-          proxy.resetForm("userRef");
-          open.value = false;
-          getList();
-        });
-      } else {
-        addUser(form.value).then(response => {
-          proxy.$message.success("新增成功");
-          proxy.resetForm("userRef");
-          open.value = false;
-          getList();
-        });
-      }
-    }
-
-  })
-}
-
 async function getUserOption() {
   const res = await userOptions();
   postOptions.value = res.posts;
@@ -224,7 +210,7 @@ async function getUserOption() {
 
 }
 
-function getList() {
+function refreshList() {
   emit('refreshList');
 }
 

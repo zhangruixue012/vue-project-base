@@ -24,7 +24,7 @@
       <search-form ref="searchFormRef" :searchKeyList="searchKeyList" :handleCurrentChange="handleCurrentChange"
                    :reset="reset" :queryParams="queryParams"/>
 
-      <operate-row :operateList="operateList"/>
+      <operate-row :operateList="operateList" :handleAdd="handleAdd"/>
 
       <Table :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
              :handleSizeChange="handleSizeChange" :handleCurrentChange="handleCurrentChange"

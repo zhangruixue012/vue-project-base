@@ -29,6 +29,10 @@
   margin: 0;
 }
 
+.el-dialog .el-dialog__body .el-form-item__label {
+  font-weight: 700;
+}
+
 .el-dialog .el-dialog__header .el-dialog__title {
   font-size: 1.1em;
   font-weight: 700;
