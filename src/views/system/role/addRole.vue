@@ -146,7 +146,6 @@ async function getMenuTreeData() {
 
 function submit(roleRef) {
   form.value.menuId = getMenuAllCheckedKeys();
-  console.log('form.value:',  form.value)
   submitForm(roleRef)
 }
 

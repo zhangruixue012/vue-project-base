@@ -41,18 +41,21 @@
         <template #event="{ data }">
           <el-button text type="primary" @click="editRow(data)" size="small" class="table-operate-btn">修改</el-button>
           <el-button text type="primary" size="small" class="table-operate-btn" @click="deleteRow(data)">删除</el-button>
-          <el-button text type="primary" size="small" class="table-operate-btn">重置密码</el-button>
+          <el-button text type="primary" size="small" class="table-operate-btn" @click="resetPwd(data)">重置密码</el-button>
           <el-button text type="primary" size="small" class="table-operate-btn">分配角色</el-button>
         </template>
       </Table>
     </div>
 
     <add-user ref="addUserRef" @refreshList="refreshList"></add-user>
+
+    <update-pwd ref="updatePwdRef"></update-pwd>
   </div>
 </template>
 
 <script setup>
 import AddUser from './addUser';
+import UpdatePwd from './updatePwd';
 import SearchForm from '@/components/SearchForm/index'
 import OperateRow from '@/components/OperateRow/index'
 import { queryDeptTree } from "@/api/common";
@@ -64,6 +67,7 @@ const deptName = ref('');
 const deptOptions = ref(undefined);
 const addUserRef = ref();
 const searchFormRef = ref();
+const updatePwdRef = ref();
 
 const operateList = reactive([
   {
@@ -165,6 +169,10 @@ function handleNodeClick(data) {
 
 function refreshList() {
   searchFormRef.value.resetForm();
+}
+
+function resetPwd(data) {
+  updatePwdRef.value.openModal(data);
 }
 
 /** 根据名称筛选部门树 */
