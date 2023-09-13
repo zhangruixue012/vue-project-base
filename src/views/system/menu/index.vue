@@ -7,7 +7,8 @@
 
     <Table ref="tableRef" :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
            :handleSizeChange="handleSizeChange" :handleCurrentChange="handleCurrentChange"
-           :handleSelectionChange="handleSelectionChange" :height="tableHeight">
+           :handleSelectionChange="handleSelectionChange" :height="tableHeight" :rowKey="'menuId'"
+           :treeProps="{ children: 'children', hasChildren: 'hasChildren' }">
       <!--   #status == v-slot:status     -->
       <template #status="{ data }">
         <el-switch
@@ -34,6 +35,7 @@ import { usePage } from '@/composables/usePage'
 import SearchForm from '@/components/SearchForm/index'
 import OperateRow from '@/components/OperateRow/index'
 import {menuList, deleteMenu} from "@/api/system/menu";
+import { handleTree } from '@/utils/index'
 
 const { proxy } = getCurrentInstance();
 const addUserRef = ref();
@@ -45,6 +47,7 @@ const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, 
   getListApi: menuList,
   addModalRef: addUserRef,
   removeApi: deleteMenu,
+  getListFunc: generateTableData,
   proxy
 })
 
@@ -113,6 +116,11 @@ const searchKeyList = reactive([
 
 function refreshList() {
   searchFormRef.value.resetForm();
+}
+
+function generateTableData() {
+  const treeTable = handleTree(tableData.value, "menuId");
+  tableData.value = treeTable;
 }
 
 reset();

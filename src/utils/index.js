@@ -1,16 +1,16 @@
-import { parseTime } from '@/ruoyi'
+import { parseTime } from '@/utils/ruoyi'
 
 /**
  * 表格时间格式化
  */
 export function formatDate(cellValue) {
   if (cellValue == null || cellValue == "") return "";
-  var date = new Date(cellValue) 
+  var date = new Date(cellValue)
   var year = date.getFullYear()
   var month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
-  var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate() 
-  var hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours() 
-  var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes() 
+  var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+  var hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours()
+  var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
   var seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
   return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
 }
@@ -330,7 +330,7 @@ export function makeMap(str, expectsLowerCase) {
     ? val => map[val.toLowerCase()]
     : val => map[val]
 }
- 
+
 export const exportDefault = 'export default '
 
 export const beautifierConf = {
@@ -387,4 +387,56 @@ export function camelCase(str) {
 export function isNumberStr(str) {
   return /^[+-]?(0|([1-9]\d*))(\.\d+)?$/g.test(str)
 }
- 
+
+/**
+ * 构造树型结构数据
+ * @param {*} data 数据源
+ * @param {*} id id字段 默认 'id'
+ * @param {*} parentId 父节点字段 默认 'parentId'
+ * @param {*} children 孩子节点字段 默认 'children'
+ */
+export function handleTree(data, id, parentId, children) {
+  let config = {
+    id: id || 'id',
+    parentId: parentId || 'parentId',
+    childrenList: children || 'children'
+  };
+
+  var childrenListMap = {};
+  var nodeIds = {};
+  var tree = [];
+
+  for (let d of data) {
+    let parentId = d[config.parentId];
+    if (childrenListMap[parentId] == null) {
+      childrenListMap[parentId] = [];
+    }
+    nodeIds[d[config.id]] = d;
+    childrenListMap[parentId].push(d);
+  }
+
+  for (let d of data) {
+    let parentId = d[config.parentId];
+    if (nodeIds[parentId] == null) {
+      tree.push(d);
+    }
+  }
+
+  for (let t of tree) {
+    adaptToChildrenList(t);
+  }
+
+  function adaptToChildrenList(o) {
+    if (childrenListMap[o[config.id]] !== null) {
+      o[config.childrenList] = childrenListMap[o[config.id]];
+    }
+    if (o[config.childrenList]) {
+      for (let c of o[config.childrenList]) {
+        adaptToChildrenList(c);
+      }
+    }
+  }
+  return tree;
+}
+
+
