@@ -439,4 +439,22 @@ export function handleTree(data, id, parentId, children) {
   return tree;
 }
 
+export function treeToArray(data) {
+  let res = [];
+
+  const platChildren = (tree) => {
+    for (const item of tree) {
+      if (item.children && item.children.length) {
+        platChildren(item.children);
+        delete item.children;
+      }
+      res.push(item)
+    }
+  };
+
+  platChildren(data);
+
+  return res;
+}
+
 

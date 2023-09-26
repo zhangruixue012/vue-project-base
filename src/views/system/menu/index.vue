@@ -35,7 +35,6 @@ import { usePage } from '@/composables/usePage'
 import SearchForm from '@/components/SearchForm/index'
 import OperateRow from '@/components/OperateRow/index'
 import {menuList, deleteMenu} from "@/api/system/menu";
-import { handleTree } from '@/utils/index'
 // import AddMenu from './addMenu'
 
 const { proxy } = getCurrentInstance();
@@ -141,12 +140,9 @@ function refreshList() {
 // ])
 
 function generateTableData() {
-  console.log(tableData.value.map(item => item.menuId));
-  console.log(tableData.value.map(item => item.parentId));
-  // const treeTable = handleTree(tableData.value, "menuId");
   const newTree = arrayToTree(tableData.value, 0);
   tableData.value = newTree;
-}
+ }
 
 function arrayToTree(data, pid) {
   let result = []
