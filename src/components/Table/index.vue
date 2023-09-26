@@ -1,30 +1,26 @@
 <template>
   <el-table :data="tableData" v-loading="loading" @selection-change="handleSelectionChange" :height="height"
-            :tree-props="treeProps" :row-key="rowKey" stripe>
+            :tree-props="treeProps" :row-key="rowKey" stripe v-bind="$attrs">
 <!--    <el-table-column label="序号" type="index" width="60" />-->
     <el-table-column align="center" type="selection" width="55" v-if="check"></el-table-column>
 
     <template v-for="(item, index) in columnData">
-      <el-table-column v-if="!item.scopedSlots"  :align="item.align || 'center'" :label="item.label" show-overflow-tooltip
-                        :fixed="item.fixed" :prop="item.prop" :width="item.width" :min-width="item.minWidth" :key="item.prop+index">
-        <template v-if="item.children">
-          <el-table-column v-for="(child,childIndex) in item.children" :align="item.align||'center'" show-overflow-tooltip :width="child.width" :min-width="child.minWidth" :prop="child.prop" :label="child.label"
-                           :fixed="child.fixed" :key="child.prop+childIndex">
-            <template v-if="child.children">
-              <el-table-column
-                  v-for="(grandson, grandIndex) in child.children"
-                  :prop="grandson.prop"
-                  :fixed="grandson.fixed"
-                  :label="grandson.label"
-                  :min-width="grandson.minWidth"
-                  :align="grandson.align||'center'"
-                  :key="grandson.prop+grandIndex"
-                  show-overflow-tooltip
-              />
-            </template>
-          </el-table-column>
-        </template>
-      </el-table-column>
+
+      <template v-if="!item.scopedSlots">
+
+        <el-table-column v-if="!item.children" :align="item.align||'center'" :width="item.width" :min-width="item.minWidth" :prop="item.prop" :label="item.label"
+                         :fixed="item.fixed" show-overflow-tooltip>
+        </el-table-column>
+
+        <TableColumn
+            v-if="item.children"
+            :key="item.key"
+            :columnHeader="item">
+          <template v-for="slot in Object.keys($slots)" #[slot]="item">
+            <slot :name="slot" v-bind="scope" />
+          </template>
+        </TableColumn>
+      </template>
 
       <el-table-column v-if="item.scopedSlots" :align="item.align||'center'" :width="item.width" :min-width="item.minWidth" :prop="item.prop" :label="item.label"
                        :fixed="item.fixed" show-overflow-tooltip>
@@ -51,6 +47,8 @@
 </template>
 
 <script setup>
+import TableColumn from './table-column';
+
 defineProps({
   tableData: Array,
   columnData: Array,

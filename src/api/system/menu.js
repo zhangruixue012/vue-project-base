@@ -17,9 +17,9 @@ export function changeUserStatus(params) {
     })
 }
 
-export function addUser(data) {
+export function addMenu(data) {
     return request({
-        url: '/system/user/addUser',
+        url: '/system/menu/addMenu',
         method: 'post',
         data
     })

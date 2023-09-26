@@ -130,6 +130,14 @@ export default [
         response: () => {
             return {"msg":"角色修改成功","code":200}
         }
+    },
+    {
+        url: '/system/menu/addMenu',
+        method: "post",
+        statusCode: 200,
+        response: () => {
+            return {"msg":"菜单新增成功","code":200}
+        }
     }
 
 

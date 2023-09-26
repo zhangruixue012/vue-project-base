@@ -108,10 +108,20 @@ const columnData = reactive([
   },
   {
     prop: 'nickName',
-    label: '用户昵称'
+    label: '用户昵称',
+    children: [
+      {
+        prop: 'nickName1',
+        label: '昵称1',
+      },
+      {
+        prop: 'nickName2',
+        label: '昵称2',
+      }
+    ]
   },
   {
-    prop: 'dept.deptName',
+    prop: 'deptName',
     label: '部门'
   },
   {
