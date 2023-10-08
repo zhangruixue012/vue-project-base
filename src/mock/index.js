@@ -138,6 +138,14 @@ export default [
         response: () => {
             return {"msg":"菜单新增成功","code":200}
         }
+    },
+    {
+        url: '/system/menu/updateMenu',
+        method: "put",
+        statusCode: 200,
+        response: () => {
+            return {"msg":"菜单编辑成功","code":200}
+        }
     }
 
 

@@ -18,15 +18,15 @@
         ></el-switch>
       </template>
 
-      <template #event="{ data }">
-        <el-button text type="primary" @click="editRow(data)" size="small" class="table-operate-btn">修改</el-button>
+      <template #event="{data}">
+        <el-button text type="primary" @click="editRow(data.row)" size="small" class="table-operate-btn">修改</el-button>
         <el-button text type="primary" size="small" class="table-operate-btn" @click="deleteRow">删除</el-button>
         <el-button text type="primary" size="small" class="table-operate-btn">重置密码</el-button>
         <el-button text type="primary" size="small" class="table-operate-btn">分配角色</el-button>
       </template>
     </Table>
 
-<!--    <AddMenu ref="addMenuRef" />-->
+    <AddMenu ref="addMenuRef" :handleCurrentChange="handleCurrentChange"/>
   </div>
 </template>
 
@@ -35,7 +35,7 @@ import { usePage } from '@/composables/usePage'
 import SearchForm from '@/components/SearchForm/index'
 import OperateRow from '@/components/OperateRow/index'
 import {menuList, deleteMenu} from "@/api/system/menu";
-// import AddMenu from './addMenu'
+import AddMenu from './addMenu'
 
 const { proxy } = getCurrentInstance();
 const addMenuRef = ref();

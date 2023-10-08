@@ -25,9 +25,9 @@ export function addMenu(data) {
     })
 }
 
-export function updateUser(data) {
+export function updateMenu(data) {
     return request({
-        url: '/system/user/updateUser',
+        url: '/system/menu/updateMenu',
         method: 'put',
         data
     })
@@ -35,7 +35,7 @@ export function updateUser(data) {
 
 export function deleteMenu(ids) {
     return request({
-        url: `/system/user/${ids}`,
+        url: `/system/menu/${ids}`,
         method: 'get',
     })
 }

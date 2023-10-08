@@ -30,7 +30,7 @@
 
       <el-row>
         <el-col :span="24">
-          <el-form-item label="菜单图标">
+          <el-form-item label="菜单图标" prop="icon">
             <el-input v-model="form.icon" placeholder="请输入菜单图标"/>
           </el-form-item>
         </el-col>
@@ -95,7 +95,7 @@
         </el-col>
 
         <el-col :span="12">
-          <el-form-item label="权限字符">
+          <el-form-item label="权限字符" prop="perms">
             <el-input v-model="form.perms" placeholder="请输入权限字符" style="width: 200px"/>
           </el-form-item>
         </el-col>
@@ -121,64 +121,58 @@
 
     <template #footer>
       <div class="dialog-footer">
-        <el-button type="primary" @click="submitForm(userRef)">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm(menuRef)">确 定</el-button>
+        <el-button @click="closeModal">取 消</el-button>
       </div>
     </template>
-
   </el-dialog>
 </template>
 
 
 <script setup>
 import { useAddModal } from "@/composables/useAddModal"
-import { addMenu } from "@/api/system/"
+import { addMenu, updateMenu } from "@/api/system/menu"
 
-const title = ref('新增');
-const open = ref(false);
 const menuTreeList = reactive();
 const menuRef = ref(null);
 
 const data = reactive({
-  form: {},
-  rules: {
-    userName: [{ required: true, message: "用户名称不能为空", trigger: "blur" }, { min: 2, max: 20, message: "用户名称长度必须介于 2 和 20 之间", trigger: "blur" }],
-    nickName: [{ required: true, message: "用户昵称不能为空", trigger: "blur" }],
-    password: [{ required: true, message: "用户密码不能为空", trigger: "blur" }, { min: 5, max: 20, message: "用户密码长度必须介于 5 和 20 之间", trigger: "blur" }],
-    email: [{ type: "email", message: "请输入正确的邮箱地址", trigger: ["blur", "change"] }],
-    phoneNumber: [{ pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/, message: "请输入正确的手机号码", trigger: "blur" }]
+  form: {
+    parentId: '',
+    menuType: '',
+    icon: '',
+    menuName: '',
+    orderNum: '',
+    isFrame: false,
+    path: '',
+    visible: true,
+    status: true,
+    component: '',
+    perms: '',
+    query: '',
+    isCache: '1'
+  },
+  rules: {}
+});
+
+const props = defineProps({
+  handleCurrentChange: {
+    type: Function,
+    default: () => {}
   }
 });
-const { form, rules } = toRefs(data);
 
-const { submitForm } = useAddModal({
-  modalFormRef: 'roleRef',
+const { form, rules } = toRefs(data);
+const { proxy } = getCurrentInstance();
+
+const { submitForm, open, title, openModal, closeModal } = useAddModal({
+  modalFormRef: 'menuRef',
   formData: form,
   addApi: addMenu,
-  updateApi: updateUser,
-  refreshList,
-  cancel,
+  updateApi: updateMenu,
+  refreshList: props.handleCurrentChange,
   proxy
 })
-
-
-function reset() {
-  form.value = {
-    id: undefined,
-    parentId: undefined,
-    menuType: undefined,
-    icon: undefined,
-    menuName: undefined,
-    orderNum: undefined,
-    perms: undefined,
-    isFrame: false
-  };
-  proxy.resetForm("menuRef");
-};
-
-function openModal(type, rowData) {
-  open.value = true;
-}
 
 //暴露openModal方法
 defineExpose({
