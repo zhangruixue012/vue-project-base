@@ -36,7 +36,7 @@ export function updateMenu(data) {
 export function deleteMenu(ids) {
     return request({
         url: `/system/menu/${ids}`,
-        method: 'get',
+        method: 'delete',
     })
 }
 

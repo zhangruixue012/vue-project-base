@@ -22,6 +22,7 @@ export function usePage(opts){
         sizeChangeFunc = () => {},
         currentChangeFunc = () => {},
         searchKeyList = [],
+        getDeleteParam = () => {}
     } = opts
 
     const page = reactive({
@@ -78,10 +79,13 @@ export function usePage(opts){
     }
 
     function deleteRow(row) {
+        let param = { ids: row.id }
+        if (!row.id) {
+            param = getDeleteParam(row);
+        }
         proxy.$modal
             .confirm("是否确认删除该条数据项？")
             .then(() => {
-                const param = { ids: row.id }
                 removeApi(param).then(res => {
                     getList()
                 })
@@ -110,11 +114,17 @@ export function usePage(opts){
         if (multipleSelection.value.length == 0) {
             return proxy.$message.warning("请至少选择一条要删除的数据！");
         }
-        let ids = multipleSelection.value.map((item) => item.id).join(',');
+
+        let idsArray = multipleSelection.value.map((item) => item.id);
         proxy.$modal
-            .confirm("是否确认删除" + ids.length + "条数据项？")
+            .confirm("是否确认删除" + idsArray.length + "条数据项？")
             .then(() => {
-                const param = { ids }
+                const idsString = idsArray.filter(item => item !== undefined).join(',')
+                let param = { ids: idsString };
+
+                if (!idsString) {
+                    param = getDeleteParam(multipleSelection.value);
+                }
                 removeApi(param).then(res => {
                     getList()
                 })

@@ -146,6 +146,14 @@ export default [
         response: () => {
             return {"msg":"菜单编辑成功","code":200}
         }
+    },
+    {
+        url: `/system/menu/1`,
+        method: "delete",
+        statusCode: 200,
+        response: () => {
+            return {"msg":"菜单删除成功","code":200}
+        }
     }
 
 

@@ -3,7 +3,7 @@
     <search-form ref="searchFormRef" :searchKeyList="searchKeyList" :handleCurrentChange="handleCurrentChange"
                  :reset="reset" :queryParams="queryParams"/>
 
-    <operate-row :operateList="operateList" :handleAdd="handleAdd"/>
+    <operate-row :operateList="operateList" :handleAdd="handleAdd" :handleDelete="handleDelete"/>
 
     <Table ref="tableRef" :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
            :handleSizeChange="handleSizeChange" :handleCurrentChange="handleCurrentChange"
@@ -20,9 +20,8 @@
 
       <template #event="{data}">
         <el-button text type="primary" @click="editRow(data.row)" size="small" class="table-operate-btn">修改</el-button>
-        <el-button text type="primary" size="small" class="table-operate-btn" @click="deleteRow">删除</el-button>
-        <el-button text type="primary" size="small" class="table-operate-btn">重置密码</el-button>
-        <el-button text type="primary" size="small" class="table-operate-btn">分配角色</el-button>
+        <el-button text type="primary" size="small" class="table-operate-btn" @click="deleteRow(data.row)">新增</el-button>
+        <el-button text type="primary" size="small" class="table-operate-btn" @click="deleteRow(data.row)">删除</el-button>
       </template>
     </Table>
 
@@ -47,6 +46,7 @@ const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, 
   getListApi: menuList,
   addModalRef: addMenuRef,
   removeApi: deleteMenu,
+  getDeleteParam: getDeleteParam,
   getListFunc: generateTableData,
   proxy
 })
@@ -158,6 +158,13 @@ function getChildren(data, result, pId) {
       getChildren(data, newItem.children, item.menuId);
     }
   }
+}
+
+function getDeleteParam(row) {
+  if (Array.isArray(row)) {
+    return row.map(item => item.menuId).join(',')
+  }
+  return row.menuId
 }
 
 reset();
