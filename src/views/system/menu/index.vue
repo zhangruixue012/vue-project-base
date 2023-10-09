@@ -142,7 +142,7 @@ function refreshList() {
 function generateTableData() {
   const newTree = arrayToTree(tableData.value, 0);
   tableData.value = newTree;
- }
+}
 
 function arrayToTree(data, pid) {
   let result = []

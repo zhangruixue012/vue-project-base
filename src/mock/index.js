@@ -15,7 +15,7 @@ import userOptions from './mockData/user/userOptions.json'
 import roleList from './mockData/roleList.json'
 import menuList from './mockData/menuList.json'
 import menuTree from './mockData/role/menuTree.json'
-
+import dictList from './mockData/dict/dictList.json'
 
 
 export default [
@@ -154,7 +154,24 @@ export default [
         response: () => {
             return {"msg":"菜单删除成功","code":200}
         }
+    },
+    {
+        url: `/system/dict/data/list`,
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return dictList
+        }
+    },
+    {
+        url: `/system/dict/data/1`,
+        method: "delete",
+        statusCode: 200,
+        response: () => {
+            return {"msg":"字典删除成功","code":200}
+        }
     }
+
 
 
 ]
