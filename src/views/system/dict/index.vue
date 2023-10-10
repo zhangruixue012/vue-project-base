@@ -19,7 +19,7 @@
       </template>
     </Table>
 
-<!--    <AddMenu ref="addMenuRef" :handleCurrentChange="handleCurrentChange"/>-->
+    <AddMenu ref="addMenuRef" :handleCurrentChange="handleCurrentChange"/>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ import { usePage } from '@/composables/usePage'
 import SearchForm from '@/components/SearchForm/index'
 import OperateRow from '@/components/OperateRow/index'
 import {listData, delData} from "@/api/system/dict/data";
-// import AddMenu from './addMenu'
+import AddMenu from './addDict'
 
 const { proxy } = getCurrentInstance();
 const addMenuRef = ref();
@@ -67,7 +67,8 @@ const columnData = reactive([
   },
   {
     prop: 'status',
-    label: '状态'
+    label: '状态',
+    scopedSlots: "status",
   },
   {
     prop: 'remark',

@@ -25,6 +25,7 @@ import plugins from './plugins' // plugins
 
 import Table from './components/Table'
 import Pagination from './components/Pagination'
+import DictTag from './components/DictTag'
 import moment from 'moment';
 
 const app = createApp(App)
@@ -37,6 +38,7 @@ app.use(plugins)
 app.component(SvgIcon)
 app.component('Table', Table)
 app.component('Pagination', Pagination)
+app.component('DictTag', DictTag)
 
 app.config.globalProperties.useDict = useDict
 app.config.globalProperties.$moment = moment

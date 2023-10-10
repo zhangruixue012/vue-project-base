@@ -11,7 +11,7 @@ const useDictStore = defineStore(
           return null;
         }
         try {
-          console.log('this.dict:', this.dict)
+          console.log('getDict:', _key, this.dict)
           for (let i = 0; i < this.dict.length; i++) {
             if (this.dict[i].key == _key) {
               return this.dict[i].value;
@@ -29,6 +29,7 @@ const useDictStore = defineStore(
             value: value
           });
         }
+        console.log('setDict', _key, this.dict);
       },
       // 删除字典
       removeDict(_key) {
@@ -50,8 +51,7 @@ const useDictStore = defineStore(
         this.dict = new Array();
       },
       // 初始字典
-      initDict() {
-      }
+      initDict() {}
     }
   })
 
