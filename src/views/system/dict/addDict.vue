@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="title" v-model="open" width="450px" append-to-body>
 
-    <el-form :model="form" :rules="rules" ref="userRef" label-width="80px">
+    <el-form :model="form" :rules="rules" ref="formRef" label-width="80px">
       <el-form-item label="字典名称" prop="dictName">
         <el-input v-model="form.dictName" placeholder="请输入字典名称" maxlength="30"/>
       </el-form-item>
@@ -27,8 +27,8 @@
 
     <template #footer>
       <div class="dialog-footer">
-        <el-button type="primary" @click="submitForm(userRef)">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm(formRef)">确 定</el-button>
+        <el-button @click="closeModal">取 消</el-button>
       </div>
     </template>
 
@@ -36,20 +36,13 @@
 </template>
 
 <script setup>
-import { addUser, updateUser, userOptions } from "@/api/system/user";
-import { queryDeptTree } from "@/api/common";
+import { addData, updateData } from "@/api/system/dict/data";
 import { useAddModal } from "@/composables/useAddModal"
 
-const userRef = ref();
+const formRef = ref();
 const { proxy } = getCurrentInstance();
 const emit = defineEmits()
 
-const title = ref('新增');
-const open = ref(false);
-const deptOptions = ref([]);
-const postOptions = ref([]);
-const roleOptions = ref([]);
-const { sys_user_sex } = proxy.useDict('sys_user_sex');
 const { sys_normal_disable } = proxy.useDict('sys_normal_disable');
 
 const data = reactive({
@@ -70,74 +63,19 @@ const data = reactive({
 
 const { form, rules } = toRefs(data);
 
-const { submitForm } = useAddModal({
-  modalFormRef: 'roleRef',
+console.log('form:', form);
+
+const { submitForm, open, title, openModal, closeModal } = useAddModal({
+  modalFormRef: 'formRef',
   formData: form,
-  addApi: addUser,
-  updateApi: updateUser,
+  addApi: addData,
+  updateApi: updateData,
   refreshList,
-  cancel,
   proxy
 })
 
-function getDeptTree() {
-  queryDeptTree().then(res => {
-    deptOptions.value = res.data;
-  });
-};
-
-function reset() {
-  form.value = {
-    id: undefined,
-    deptId: undefined,
-    userName: undefined,
-    nickName: undefined,
-    password: undefined,
-    phoneNumber: undefined,
-    email: undefined,
-    sex: undefined,
-    status: "0",
-    remark: undefined,
-    postIds: undefined,
-    roleIds: undefined
-  };
-  proxy.resetForm("userRef");
-};
-
-function openModal(type, rowData) {
-  open.value = true;
-  getDeptTree();
-  reset();
-  getUserOption();
-
-  if (type === 'add') {
-    title.value = '新增'
-    return;
-  }
-
-  if (type === 'edit') {
-    title.value = '修改'
-    const { id, nickName, deptId, phoneNumber, email, userName, password, sex, status, postIds, roleIds, remark } = rowData.row
-    Object.assign(form.value, {
-      id, nickName, deptId, phoneNumber, email, userName, password, sex, status, postIds, roleIds, remark
-    })
-    return;
-  }
-}
-
-async function getUserOption() {
-  const res = await userOptions();
-  postOptions.value = res.posts;
-  roleOptions.value = res.roles;
-
-}
-
 function refreshList() {
-  emit('refreshList');
-}
-
-function cancel() {
-  open.value = false;
+  emit('handleCurrentChange', 1);
 }
 
 

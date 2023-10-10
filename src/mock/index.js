@@ -170,8 +170,23 @@ export default [
         response: () => {
             return {"msg":"字典删除成功","code":200}
         }
-    }
-
+    },
+    {
+        url: '/system/dict/data',
+        method: "post",
+        statusCode: 200,
+        response: () => {
+            return {"msg":"字典新增成功","code":200}
+        }
+    },
+    {
+        url: '/system/dict/data',
+        method: "put",
+        statusCode: 200,
+        response: () => {
+            return {"msg":"字典修改成功","code":200}
+        }
+    },
 
 
 ]

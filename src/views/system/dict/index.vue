@@ -19,7 +19,7 @@
       </template>
     </Table>
 
-    <AddMenu ref="addMenuRef" :handleCurrentChange="handleCurrentChange"/>
+    <AddMenu ref="addMenuRef" @handleCurrentChange="handleCurrentChange"/>
   </div>
 </template>
 
@@ -43,7 +43,6 @@ const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, 
   getDeleteParam: getDeleteParam,
   proxy
 })
-
 
 const operateList = reactive([
   { type: 'add' },
@@ -111,10 +110,6 @@ const searchKeyList = reactive([
     valueFormat: 'YYYY-MM-DD'
   }
 ])
-
-function refreshList() {
-  searchFormRef.value.resetForm();
-}
 
 function getDeleteParam(row) {
   if (Array.isArray(row)) {

@@ -14,12 +14,8 @@ export function useAddModal(opts){
     const open = ref(false);
 
     function openModal(type, rowData) {
-        let newData = reactive({});
-        let allKeys = Object.keys(formData);
-        allKeys.forEach(key => {
-            newData[key] = ''
-        })
-        formData.value = newData;
+        proxy.resetForm(modalFormRef);
+        console.log('新增打开formData:', formData);
 
         if (type === 'add') {
             operateType.value = 'add';
@@ -29,6 +25,7 @@ export function useAddModal(opts){
         if (type === 'edit') {
             operateType.value = 'edit';
             formData.value = rowData;
+            console.log('formData.value', formData.value);
             title.value = '编辑'
         }
         open.value = true;
@@ -44,16 +41,17 @@ export function useAddModal(opts){
         formEl.validate(async (valid, fields) => {
             if (valid) {
                 if (operateType.value === 'edit') {
+                    console.log('保存的数据', formData.value);
                     updateApi(formData.value).then(response => {
                         proxy.$message.success("修改成功");
                         closeModal()
-                        refreshList(1);
+                        refreshList();
                     });
                 } else {
                     addApi(formData.value).then(response => {
                         proxy.$message.success("新增成功");
                         closeModal()
-                        refreshList(1);
+                        refreshList();
                     });
                 }
             }
