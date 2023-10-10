@@ -38,6 +38,7 @@
 <script setup>
 import { addData, updateData } from "@/api/system/dict/data";
 import { useAddModal } from "@/composables/useAddModal"
+import {deepClone} from "@/utils";
 
 const formRef = ref();
 const { proxy } = getCurrentInstance();

@@ -15,11 +15,16 @@ export function useAddModal(opts){
 
     function openModal(type, rowData) {
         proxy.resetForm(modalFormRef);
-        console.log('新增打开formData:', formData);
 
         if (type === 'add') {
             operateType.value = 'add';
-            title.value = '新增'
+            title.value = '新增';
+            const newData = {};
+            Object.keys(formData.value).forEach(key => {
+                newData[key] = ''
+            })
+            formData.value = newData;
+
         }
 
         if (type === 'edit') {
