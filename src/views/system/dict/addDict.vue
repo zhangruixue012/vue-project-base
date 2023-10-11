@@ -38,7 +38,6 @@
 <script setup>
 import { addData, updateData } from "@/api/system/dict/data";
 import { useAddModal } from "@/composables/useAddModal"
-import {deepClone} from "@/utils";
 
 const formRef = ref();
 const { proxy } = getCurrentInstance();
@@ -63,8 +62,6 @@ const data = reactive({
 });
 
 const { form, rules } = toRefs(data);
-
-console.log('form:', form);
 
 const { submitForm, open, title, openModal, closeModal } = useAddModal({
   modalFormRef: 'formRef',

@@ -16,6 +16,7 @@ import roleList from './mockData/roleList.json'
 import menuList from './mockData/menuList.json'
 import menuTree from './mockData/role/menuTree.json'
 import dictList from './mockData/dict/dictList.json'
+import userInfo from './mockData/user/userInfo.json'
 
 
 export default [
@@ -25,6 +26,14 @@ export default [
         statusCode: 200, // 返回的http状态码
         response: () => {
             return router
+        }
+    },
+    {
+        url: "/dev-api/getInfo",
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return userInfo
         }
     },
     {

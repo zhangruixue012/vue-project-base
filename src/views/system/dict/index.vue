@@ -13,6 +13,12 @@
         <dict-tag :options="sys_normal_disable" :value="data.row.status" />
       </template>
 
+      <template #dictType="{ data }">
+        <router-link :to="'/system/dict-data/index/' + data.row.dictId" class="link-type">
+          <span>{{ data.row.dictType }}</span>
+        </router-link>
+      </template>
+
       <template #event="{data}">
         <el-button text type="primary" @click="editRow(data.row)" size="small" class="table-operate-btn">修改</el-button>
         <el-button text type="primary" size="small" class="table-operate-btn" @click="deleteRow(data.row)">删除</el-button>
@@ -62,7 +68,8 @@ const columnData = reactive([
   },
   {
     prop: 'dictType',
-    label: '字典类型'
+    label: '字典类型',
+    scopedSlots: "dictType",
   },
   {
     prop: 'status',

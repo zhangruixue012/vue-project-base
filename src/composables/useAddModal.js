@@ -30,7 +30,6 @@ export function useAddModal(opts){
         if (type === 'edit') {
             operateType.value = 'edit';
             formData.value = rowData;
-            console.log('formData.value', formData.value);
             title.value = '编辑'
         }
         open.value = true;
