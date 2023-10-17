@@ -221,6 +221,28 @@ export default [
             return optionNameList
         }
     },
+    {
+        url: '/system/dict/type/1',
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return {
+                "msg": "操作成功",
+                "code": 200,
+                "data": {
+                    "createBy": "admin",
+                    "createTime": "2023-04-23 16:13:13",
+                    "updateBy": null,
+                    "updateTime": null,
+                    "remark": "用户性别列表",
+                    "dictId": 1,
+                    "dictName": "用户性别",
+                    "dictType": "sys_user_sex",
+                    "status": "0"
+                }
+            }
+        }
+    },
 
 
 ]

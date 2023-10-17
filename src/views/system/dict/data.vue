@@ -27,9 +27,8 @@
 import { usePage } from '@/composables/usePage'
 import SearchForm from '@/components/SearchForm/index'
 import OperateRow from '@/components/OperateRow/index'
-import {delData, getDictInfo, optionSelect} from "@/api/system/dict/data";
+import {delData, optionSelect, getType, listData} from "@/api/system/dict/data";
 import AddData from './addData'
-import {listData} from "../../../api/system/dict/data";
 
 const { proxy } = getCurrentInstance();
 const addDataRef = ref();
@@ -118,15 +117,6 @@ const columnData = reactive([
   },
 ])
 
-watch(route.params.dictId, val => {
-  getDict(route.params.dictId)
-})
-
-async function getDict() {
-  const dictInfo = getDictInfo(route.params.dictId);
-  const { dictType } = dictInfo;
-  defaultDictType.value = dictType
-}
 
 function getDeleteParam(row) {
   if (Array.isArray(row)) {
@@ -149,9 +139,17 @@ function handleReturn() {
   })
 }
 
-generateQueryParams();
+/** 查询字典类型详细 */
+function getTypes(dictId) {
+  getType(dictId).then(response => {
+    defaultDictType.value = response.data.dictType;
+    generateQueryParams();
+    reset();
+  });
+}
+
+getTypes(route.params && route.params.dictId);
 getOptionSelect();
-reset();
 </script>
 
 <style lang="scss" scoped>

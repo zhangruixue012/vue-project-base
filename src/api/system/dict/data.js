@@ -57,3 +57,11 @@ export function optionSelect() {
     method: 'get'
   })
 }
+
+// 查询字典类型详细
+export function getType(dictId) {
+  return request({
+    url: '/system/dict/type/' + dictId,
+    method: 'get'
+  })
+}
