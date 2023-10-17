@@ -1,3 +1,4 @@
+import {deepClone} from "../utils";
 
 export function useAddModal(opts){
     const {
@@ -12,6 +13,7 @@ export function useAddModal(opts){
     const title = ref('新增');
     const operateType = ref('add');
     const open = ref(false);
+    const basicFormData = deepClone(formData.value);
 
     function openModal(type, rowData) {
         proxy.resetForm(modalFormRef);
@@ -19,12 +21,7 @@ export function useAddModal(opts){
         if (type === 'add') {
             operateType.value = 'add';
             title.value = '新增';
-            const newData = {};
-            Object.keys(formData.value).forEach(key => {
-                newData[key] = ''
-            })
-            formData.value = newData;
-
+            formData.value = basicFormData;
         }
 
         if (type === 'edit') {

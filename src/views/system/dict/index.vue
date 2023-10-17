@@ -33,7 +33,7 @@
 import { usePage } from '@/composables/usePage'
 import SearchForm from '@/components/SearchForm/index'
 import OperateRow from '@/components/OperateRow/index'
-import {listData, delData} from "@/api/system/dict/data";
+import {listType} from "@/api/system/dict/type";
 import AddMenu from './addDict'
 
 const { proxy } = getCurrentInstance();
@@ -43,9 +43,9 @@ const searchFormRef = ref();
 // 接收 查询参数、获取列表的接口 返回 列表所需要的数据、分页参数、分页函数等
 const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, deleteRow, handleAdd, handleDelete,
   handleSelectionChange, queryParams, tableHeight } = usePage({
-  getListApi: listData,
+  getListApi: listType,
   addModalRef: addMenuRef,
-  removeApi: delData,
+  // removeApi: delData,
   getDeleteParam: getDeleteParam,
   proxy
 })

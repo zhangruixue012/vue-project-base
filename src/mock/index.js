@@ -15,9 +15,10 @@ import userOptions from './mockData/user/userOptions.json'
 import roleList from './mockData/roleList.json'
 import menuList from './mockData/menuList.json'
 import menuTree from './mockData/role/menuTree.json'
-import dictList from './mockData/dict/dictList.json'
+import dictDataList from './mockData/dict/dictDataList.json'
 import userInfo from './mockData/user/userInfo.json'
-
+import dictTypeList from './mockData/dict/dictTypeList.json'
+import optionNameList from './mockData/dict/optionNameList.json'
 
 export default [
     {
@@ -169,7 +170,15 @@ export default [
         method: "get",
         statusCode: 200,
         response: () => {
-            return dictList
+            return dictDataList
+        }
+    },
+    {
+        url: `/system/dict/type/list`,
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return dictTypeList
         }
     },
     {
@@ -194,6 +203,22 @@ export default [
         statusCode: 200,
         response: () => {
             return {"msg":"字典修改成功","code":200}
+        }
+    },
+    {
+        url: '/system/dict/data/1',
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return []
+        }
+    },
+    {
+        url: '/system/dict/type/optionSelect',
+        method: "get",
+        statusCode: 200,
+        response: () => {
+            return optionNameList
         }
     },
 

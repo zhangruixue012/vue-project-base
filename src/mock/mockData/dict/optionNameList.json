@@ -1,0 +1,116 @@
+{
+  "msg": "操作成功",
+  "code": 200,
+  "data": [
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:13",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "用户性别列表",
+      "dictId": 1,
+      "label": "用户性别",
+      "value": "sys_user_sex",
+      "status": "0"
+    },
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:14",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "菜单状态列表",
+      "dictId": 2,
+      "label": "菜单状态",
+      "value": "sys_show_hide",
+      "status": "0"
+    },
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:14",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "系统开关列表",
+      "dictId": 3,
+      "label": "系统开关",
+      "value": "sys_normal_disable",
+      "status": "0"
+    },
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:15",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "任务状态列表",
+      "dictId": 4,
+      "label": "任务状态",
+      "value": "sys_job_status",
+      "status": "0"
+    },
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:15",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "任务分组列表",
+      "dictId": 5,
+      "label": "任务分组",
+      "value": "sys_job_group",
+      "status": "0"
+    },
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:16",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "系统是否列表",
+      "dictId": 6,
+      "label": "系统是否",
+      "value": "sys_yes_no",
+      "status": "0"
+    },
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:17",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "通知类型列表",
+      "dictId": 7,
+      "label": "通知类型",
+      "value": "sys_notice_type",
+      "status": "0"
+    },
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:17",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "通知状态列表",
+      "dictId": 8,
+      "label": "通知状态",
+      "value": "sys_notice_status",
+      "status": "0"
+    },
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:18",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "操作类型列表",
+      "dictId": 9,
+      "label": "操作类型",
+      "value": "sys_oper_type",
+      "status": "0"
+    },
+    {
+      "createBy": "admin",
+      "createTime": "2023-04-23 16:13:19",
+      "updateBy": null,
+      "updateTime": null,
+      "remark": "登录状态列表",
+      "dictId": 10,
+      "label": "系统状态",
+      "value": "sys_common_status",
+      "status": "0"
+    }
+  ]
+}

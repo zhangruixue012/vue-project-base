@@ -10,17 +10,17 @@ export function listData(query) {
 }
 
 // 查询字典数据详细
-export function getData(dictCode) {
+export function getDetail(dictCode) {
   return request({
     url: '/system/dict/data/' + dictCode,
     method: 'get'
   })
 }
 
-// 根据字典类型查询字典数据信息
-export function getDicts(dictType) {
+// 查询字典数据详细
+export function getDictInfo(dictCode) {
   return request({
-    url: '/system/dict/data/type/' + dictType,
+    url: '/system/dict/data/type/' + dictCode,
     method: 'get'
   })
 }
@@ -48,5 +48,12 @@ export function delData(dictCode) {
   return request({
     url: '/system/dict/data/' + dictCode,
     method: 'delete'
+  })
+}
+// 获取字典选择框列表
+export function optionSelect() {
+  return request({
+    url: '/system/dict/type/optionSelect',
+    method: 'get'
   })
 }

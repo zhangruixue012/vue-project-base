@@ -16,6 +16,14 @@
           @click="handleDelete"
       >删除</el-button>
     </el-col>
+    <el-col :span="1.5" v-if="isOperate('return')">
+      <el-button
+          type="info"
+          plain
+          size="small"
+          @click="handleReturn"
+      >返回</el-button>
+    </el-col>
 
     <el-col :span="1.5" v-if="isOperate('import')">
       <upload-button :url="uploadUrl" :data="{}" :isDelete="false" :accept="'excel'">
@@ -43,6 +51,10 @@ const props = defineProps({
     default: () => {}
   },
   handleDelete: {
+    type: Function,
+    default: () => {}
+  },
+  handleReturn: {
     type: Function,
     default: () => {}
   },

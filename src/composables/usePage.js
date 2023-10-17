@@ -22,7 +22,7 @@ export function usePage(opts){
         sizeChangeFunc = () => {},
         currentChangeFunc = () => {},
         searchKeyList = [],
-        getDeleteParam = () => {}
+        getDeleteParam = () => {},
     } = opts
 
     const page = reactive({
@@ -41,10 +41,17 @@ export function usePage(opts){
     const queryParams = reactive({})
     function generateQueryParams() {
         searchKeyList.forEach(item => {
-            Object.assign(queryParams, {
-                [item.key]: item.type === 'dateRange' ? [] : ''
-            })
+            if (item.defaultValue) {
+                Object.assign(queryParams, {
+                    [item.key]: item.defaultValue
+                })
+            } else {
+                Object.assign(queryParams, {
+                    [item.key]: item.type === 'dateRange' ? [] : ''
+                })
+            }
         })
+        console.log('queryParams:', queryParams, searchKeyList);
     }
 
     function reset() {
@@ -59,6 +66,7 @@ export function usePage(opts){
             ...queryParams,
             ...customQueryParameters
         }
+
 
         getListApi(opts).then((res) => {
             if (res.code === 200) {
