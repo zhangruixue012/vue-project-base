@@ -120,9 +120,9 @@ const columnData = reactive([
 
 function getDeleteParam(row) {
   if (Array.isArray(row)) {
-    return row.map(item => item.dictId).join(',')
+    return row.map(item => item.dictCode).join(',')
   }
-  return row.dictId
+  return row.dictCode
 }
 
 async function getOptionSelect() {
