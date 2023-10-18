@@ -3,7 +3,7 @@
     <search-form ref="searchFormRef" :searchKeyList="searchKeyList" :handleCurrentChange="handleCurrentChange"
                  :reset="reset" :queryParams="queryParams"/>
 
-    <operate-row :operateList="operateList" :handleAdd="handleAdd" :handleDelete="handleDelete" :handleReturn="handleReturn"/>
+    <operate-row :operateList="operateList" :handleAdd="openModal" :handleDelete="handleDelete" :handleReturn="handleReturn"/>
 
     <Table ref="tableRef" :tableData ="tableData" :columnData="columnData" :pageTotal="page.total" :pageParam="page"
            :handleSizeChange="handleSizeChange" :handleCurrentChange="handleCurrentChange"
@@ -145,6 +145,12 @@ function getTypes(dictId) {
     defaultDictType.value = response.data.dictType;
     generateQueryParams();
     reset();
+  });
+}
+
+function openModal() {
+  addDataRef.value.openModal('add', {
+    dictType: defaultDictType.value
   });
 }
 

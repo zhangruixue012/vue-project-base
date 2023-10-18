@@ -21,7 +21,13 @@ export function useAddModal(opts){
         if (type === 'add') {
             operateType.value = 'add';
             title.value = '新增';
+
             formData.value = basicFormData;
+            if (rowData) {
+                Object.keys(rowData).forEach(key => {
+                    formData.value[key] = rowData[key]
+                })
+            }
         }
 
         if (type === 'edit') {
