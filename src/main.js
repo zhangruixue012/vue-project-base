@@ -27,6 +27,7 @@ import Table from './components/Table'
 import Pagination from './components/Pagination'
 import DictTag from './components/DictTag'
 import moment from 'moment';
+import directive from "./directive";
 
 const app = createApp(App)
 
@@ -39,6 +40,8 @@ app.component(SvgIcon)
 app.component('Table', Table)
 app.component('Pagination', Pagination)
 app.component('DictTag', DictTag)
+
+directive(app)
 
 app.config.globalProperties.useDict = useDict
 app.config.globalProperties.$moment = moment

@@ -217,7 +217,6 @@ export function getTime(type) {
  */
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
-
   const later = function() {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
@@ -455,6 +454,10 @@ export function treeToArray(data) {
   platChildren(data);
 
   return res;
+}
+
+export function isFunction(param) {
+  return Object.prototype.toString.call(param) === '[object Function]'
 }
 
 

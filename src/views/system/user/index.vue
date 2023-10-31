@@ -97,8 +97,6 @@ const { reset, page, tableData, handleSizeChange, handleCurrentChange, editRow, 
 
 const { sys_normal_disable } = proxy.useDict('sys_normal_disable');
 
-console.log('sys_normal_disable:', sys_normal_disable);
-
 const columnData = reactive([
   {
     prop: 'userId',
