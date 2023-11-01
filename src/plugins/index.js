@@ -10,7 +10,7 @@ export default function installPlugins(app){
   // 认证对象
   app.config.globalProperties.$auth = auth
   // 缓存对象
-  app.config.globalProperties.$cache = cache
+  // app.config.globalProperties.$cache = cache
   // 模态框对象
   app.config.globalProperties.$modal = modal
   // 下载文件
