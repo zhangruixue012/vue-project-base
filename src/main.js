@@ -17,7 +17,7 @@ import '@/assets/styles/index.scss' // global css
 import { useDict } from '@/utils/dict'
 import { resetForm } from '@/utils/ruoyi'
 import { download } from '@/utils/request'
-import '@/mock/index.js'
+// import '@/mock/index.js'
 import './permission' // permission control
 
 // 注册指令

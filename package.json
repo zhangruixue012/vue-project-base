@@ -4,13 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "vite --debug",
-    "build": "vite build",
+    "dev:mock": "cross-env USE_MOCK=true vite",
+    "build": "cross-env USE_CHUNK_MOCK=true vite build",
+    "build:mock": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
   "dependencies": {
     "axios": "^1.4.0",
+    "cross-env": "^7.0.3",
     "echarts": "^5.4.3",
     "element-plus": "^2.3.8",
     "file-saver": "^2.0.5",
