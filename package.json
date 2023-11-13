@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "vite --debug",
     "dev:mock": "cross-env USE_MOCK=true vite",
-    "build": "cross-env USE_CHUNK_MOCK=true vite build",
-    "build:mock": "vite build",
+    "build": "vite build",
+    "build:mock": "cross-env USE_CHUNK_MOCK=true vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/"

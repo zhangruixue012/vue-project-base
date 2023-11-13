@@ -22,7 +22,7 @@ import optionNameList from './mockData/dict/optionNameList.json'
 
 export default [
     {
-        url: "/dev-api/getRouters", // 模拟登录的链接
+        url: "/dev-api-mock/getRouters", // 模拟登录的链接
         method: "get", // 请求方式
         statusCode: 200, // 返回的http状态码
         response: () => {
@@ -30,7 +30,7 @@ export default [
         }
     },
     {
-        url: "/dev-api/getInfo",
+        url: "/dev-api-mock/getInfo",
         method: "get",
         statusCode: 200,
         response: () => {
@@ -38,7 +38,7 @@ export default [
         }
     },
     {
-        url: "/dev-api/common/deptTree", // 部门下拉树
+        url: "/dev-api-mock/common/deptTree", // 部门下拉树
         method: "get",
         statusCode: 200,
         response: () => {
@@ -46,7 +46,7 @@ export default [
         }
     },
     {
-        url: "/dev-api/system/user/list", // 用户列表
+        url: "/dev-api-mock/system/user/list", // 用户列表
         method: "get",
         statusCode: 200,
         response: () => {
@@ -54,7 +54,7 @@ export default [
         }
     },
     {
-        url: "/system/user/changeStatus", // 修改用户状态
+        url: "/dev-api-mock/system/user/changeStatus", // 修改用户状态
         method: "put",
         statusCode: 200,
         response: () => {
@@ -62,7 +62,7 @@ export default [
         }
     },
     {
-        url: "/system/dict/data/type/sys_normal_disable", // 用户状态字典表
+        url: "/dev-api-mock/system/dict/data/type/sys_normal_disable", // 用户状态字典表
         method: "get",
         statusCode: 200,
         response: () => {
@@ -70,7 +70,7 @@ export default [
         }
     },
     {
-        url: "/system/dict/data/type/sys_user_sex", // 用户状态字典表
+        url: "/dev-api-mock/system/dict/data/type/sys_user_sex", // 用户状态字典表
         method: "get",
         statusCode: 200,
         response: () => {
@@ -78,7 +78,7 @@ export default [
         }
     },
     {
-        url: "/system/user/addUser", // 新增用户
+        url: "/dev-api-mock/system/user/addUser", // 新增用户
         method: "post",
         statusCode: 200,
         response: () => {
@@ -86,7 +86,7 @@ export default [
         }
     },
     {
-        url: "/system/user/updateUser", // 修改用户
+        url: "/dev-api-mock/system/user/updateUser", // 修改用户
         method: "put",
         statusCode: 200,
         response: () => {
@@ -94,7 +94,7 @@ export default [
         }
     },
     {
-        url: "/system/userOptions", // 用户岗位下拉 && 角色下拉
+        url: "/dev-api-mock/system/userOptions", // 用户岗位下拉 && 角色下拉
         method: "get",
         statusCode: 200,
         response: () => {
@@ -102,7 +102,7 @@ export default [
         }
     },
     {
-        url: "/system/role/list", // 角色列表
+        url: "/dev-api-mock/system/role/list", // 角色列表
         method: "get",
         statusCode: 200,
         response: () => {
@@ -110,7 +110,7 @@ export default [
         }
     },
     {
-        url: "/system/menu/list", // 菜单列表
+        url: "/dev-api-mock/system/menu/list", // 菜单列表
         method: "get",
         statusCode: 200,
         response: () => {
@@ -118,7 +118,7 @@ export default [
         }
     },
     {
-        url: "/system/menu/treeSelect", // 菜单树
+        url: "/dev-api-mock/system/menu/treeSelect", // 菜单树
         method: "get",
         statusCode: 200,
         response: () => {
@@ -126,7 +126,7 @@ export default [
         }
     },
     {
-        url: "/system/role/addRole", // 新增角色
+        url: "/dev-api-mock/system/role/addRole", // 新增角色
         method: "post",
         statusCode: 200,
         response: () => {
@@ -134,7 +134,7 @@ export default [
         }
     },
     {
-        url: "/system/role/updateRole", // 修改角色
+        url: "/dev-api-mock/system/role/updateRole", // 修改角色
         method: "put",
         statusCode: 200,
         response: () => {
@@ -142,7 +142,7 @@ export default [
         }
     },
     {
-        url: '/system/menu/addMenu',
+        url: '/dev-api-mock/system/menu/addMenu',
         method: "post",
         statusCode: 200,
         response: () => {
@@ -150,7 +150,7 @@ export default [
         }
     },
     {
-        url: '/system/menu/updateMenu',
+        url: '/dev-api-mock/system/menu/updateMenu',
         method: "put",
         statusCode: 200,
         response: () => {
@@ -158,7 +158,7 @@ export default [
         }
     },
     {
-        url: `/system/menu/1`,
+        url: `/dev-api-mock/system/menu/1`,
         method: "delete",
         statusCode: 200,
         response: () => {
@@ -166,7 +166,7 @@ export default [
         }
     },
     {
-        url: `/system/dict/data/list`,
+        url: `/dev-api-mock/system/dict/data/list`,
         method: "get",
         statusCode: 200,
         response: () => {
@@ -174,7 +174,7 @@ export default [
         }
     },
     {
-        url: `/system/dict/type/list`,
+        url: `/dev-api-mock/system/dict/type/list`,
         method: "get",
         statusCode: 200,
         response: () => {
@@ -182,7 +182,7 @@ export default [
         }
     },
     {
-        url: `/system/dict/data/1`,
+        url: `/dev-api-mock/system/dict/data/1`,
         method: "delete",
         statusCode: 200,
         response: () => {
@@ -190,7 +190,7 @@ export default [
         }
     },
     {
-        url: '/system/dict/data',
+        url: '/dev-api-mock/system/dict/data',
         method: "post",
         statusCode: 200,
         response: () => {
@@ -198,7 +198,7 @@ export default [
         }
     },
     {
-        url: '/system/dict/data',
+        url: '/dev-api-mock/system/dict/data',
         method: "put",
         statusCode: 200,
         response: () => {
@@ -206,7 +206,7 @@ export default [
         }
     },
     {
-        url: '/system/dict/data/1',
+        url: '/dev-api-mock/system/dict/data/1',
         method: "get",
         statusCode: 200,
         response: () => {
@@ -214,7 +214,7 @@ export default [
         }
     },
     {
-        url: '/system/dict/type/optionSelect',
+        url: '/dev-api-mock/system/dict/type/optionSelect',
         method: "get",
         statusCode: 200,
         response: () => {
@@ -222,7 +222,7 @@ export default [
         }
     },
     {
-        url: '/system/dict/type/1',
+        url: '/dev-api-mock/system/dict/type/1',
         method: "get",
         statusCode: 200,
         response: () => {

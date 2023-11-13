@@ -20,7 +20,8 @@ export default function createVitePlugins(viteEnv, isBuild = false) {
                 setupProdMockServer();
             `,
             supportTs: false
-        })]
+        })
+        ]
     vitePlugins.push(createAutoImport())
     // vitePlugins.push(createSetupExtend())
     // vitePlugins.push(createSvgIcon(isBuild))
