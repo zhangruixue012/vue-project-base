@@ -129,6 +129,34 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Three",
+      "path": "/three",
+      "hidden": false,
+      "redirect": "noRedirect",
+      "component": "Layout",
+      "alwaysShow": true,
+      "meta": {
+        "title": "THREE",
+        "icon": "system",
+        "noCache": false,
+        "link": null
+      },
+      "children": [
+        {
+          "name": "Three",
+          "path": "demo1",
+          "hidden": false,
+          "component": "three/demo1",
+          "meta": {
+            "title": "demo1",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
+        }
+      ]
     }
   ]
 }

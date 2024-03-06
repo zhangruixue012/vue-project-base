@@ -13,235 +13,281 @@ import chinaJSON from '../assets/json/china.json'
 
 
 const chinaMap = ref();
+const historyList = ref([]);
+let myChart = {}
+const timeFn = null;
 
 const options = ref({
-  visualMap: {           //地图图例
-    show: true,
-    left: 26,
-    bottom: 40,
-    showLabel: true,
-    pieces: [        //根据数据大小，各省显示不同颜色
-      {
-        gte: 100,
-        label: ">= 1000",
-        color: "#1f307b"
-      },
-      {
-        gte: 500,
-        lt: 999,
-        label: "500 - 999",
-        color: "#3c57ce"
-      },
-      {
-        gte: 100,
-        lt: 499,
-        label: "100 - 499",
-        color: "#6f83db"
-      },
-      {
-        gte: 10,
-        lt: 99,
-        label: "10 - 99",
-        color: "#9face7"
-      },
-      {
-        lt: 10,
-        label: '<10',
-        color: "#bcc5ee"
-      }
-    ]
-  },
-  geo: {                 //中国地图设置
-    map: "china",
-    scaleLimit: {
-      min: 1,
-      max: 2
-    },
+  geo: {
+    map: 'china', //地图类型。
     zoom: 1,
-    top: 120,
-    label: {
-      normal: {
-        show: true,
-        fontSize: "14",
-        color: "rgba(0,0,0,0.7)"
-      }
-    },
+    roam: true,
+    animation: false,
     itemStyle: {
-      normal: {
-        borderColor: "rgba(0, 0, 0, 0.2)"
+      // 区域样式
+      areaColor: {
+        type: "radial",
+        x: 0.5,
+        y: 0.5,
+        r: 0.8,
+        colorStops: [
+          {
+            offset: 0,
+            color: "rgba(147, 235, 248, 1)", // 0% 处的颜色
+          },
+          {
+            offset: 1,
+            color: "rgba(2, 99, 206, 1)", // 100% 处的颜色
+          },
+        ],
+        globalCoord: false, // 缺省为 false
       },
-      emphasis: {
-        areaColor: "#f2d5ad",
-        shadowOffsetX: 0,
-        shadowOffsetY: 0,
-        borderWidth: 0
-      }
-    }
+      shadowColor: "#105781", //地图区域的阴影颜色。
+      shadowOffsetX: 0,
+      shadowOffsetY: 10,
+    },
   },
   series: [
     {
-      name: "突发事件",
-      type: "map",
-      geoIndex: 0,
-      data: [
-        {
-          name: "南海诸岛",
-          value: 100,
-          eventTotal:100,
-          specialImportant:10,
-          import:10,
-          compare:10,
-          common:40,
-          specail:20
+      name: "map",
+      type: "map", // 地图
+      map: "china", // 加载注册的地图
+      selectedMode: false, // 不让单独选中
+      roam: true, // 开始鼠标事件，scale缩放、move移动
+      // 图形上的文本标签
+      label: {
+        show: true,
+        color: "#000a3c",
+      },
+      // 地图样式
+      itemStyle: {
+        // 区域样式
+        areaColor: {
+          type: "radial",
+          x: 0.5,
+          y: 0.5,
+          r: 3,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgba(223, 231, 242, 1)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(2, 99, 206, 1)", // 100% 处的颜色
+            },
+          ],
+          globalCoord: false, // 缺省为 false
         },
-        {
-          name: "北京",
-          value: 540
+        borderWidth: 1, // 边框大小
+        borderColor: "rgba(104, 152, 190, 1)", // 边框样式
+        shadowColor: "rgba(128, 217, 248, 1)", // 阴影颜色
+        shadowOffsetX: -2, // 阴影水平方向上的偏移距离
+        shadowOffsetY: 2, // 阴影垂直方向上的偏移距离
+        shadowBlur: 10, // 文字块的背景阴影长度
+      },
+      // 选中状态下样式
+      emphasis: {
+        label: {
+          color: "#ffffff",
         },
-        {
-          name: "天津",
-          value: 130
+        itemStyle: {
+          areaColor: "#a5d4fe",
         },
-        {
-          name: "上海",
-          value: 400
-        },
-        {
-          name: "重庆",
-          value: 750
-        },
-        {
-          name: "河北",
-          value: 130
-        },
-        {
-          name: "河南",
-          value: 830
-        },
-        {
-          name: "云南",
-          value: 110
-        },
-        {
-          name: "辽宁",
-          value: 19
-        },
-        {
-          name: "黑龙江",
-          value: 150
-        },
-        {
-          name: "湖南",
-          value: 690
-        },
-        {
-          name: "安徽",
-          value: 60
-        },
-        {
-          name: "山东",
-          value: 39
-        },
-        {
-          name: "新疆",
-          value: 4
-        },
-        {
-          name: "江苏",
-          value: 31
-        },
-        {
-          name: "浙江",
-          value: 104
-        },
-        {
-          name: "江西",
-          value: 36
-        },
-        {
-          name: "湖北",
-          value: 52
-        },
-        {
-          name: "广西",
-          value: 33
-        },
-        {
-          name: "甘肃",
-          value: 7
-        },
-        {
-          name: "山西",
-          value: 5
-        },
-        {
-          name: "内蒙古",
-          value: 778
-        },
-        {
-          name: "陕西",
-          value: 22
-        },
-        {
-          name: "吉林",
-          value: 4
-        },
-        {
-          name: "福建",
-          value: 18
-        },
-        {
-          name: "贵州",
-          value: 5
-        },
-        {
-          name: "广东",
-          value: 98
-        },
-        {
-          name: "青海",
-          value: 1
-        },
-        {
-          name: "西藏",
-          value: 0
-        },
-        {
-          name: "四川",
-          value: 44
-        },
-        {
-          name: "宁夏",
-          value: 4
-        },
-        {
-          name: "海南",
-          value: 22
-        },
-        {
-          name: "台湾",
-          value: 3
-        },
-        {
-          name: "香港",
-          value: 5
-        },
-        {
-          name: "澳门",
-          value: 555
-        }
-      ]
-    }
-  ]
+      },
+    },
+  ],
 });
+
+function initMap(mapData, mapName) {
+  // 注册地图
+  echarts.registerMap(mapName, mapData);
+
+  // 配置项
+  let options = {
+    geo: {
+      map: mapName, //地图类型
+      zoom: 1,
+      roam: true,
+      animation: false,
+      itemStyle: {
+        // 区域样式
+        areaColor: {
+          type: "radial",
+          x: 0.5,
+          y: 0.5,
+          r: 0.8,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgba(147, 235, 248, 1)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(2, 99, 206, 1)", // 100% 处的颜色
+            },
+          ],
+          globalCoord: false, // 缺省为 false
+        },
+        shadowColor: "#105781", //地图区域的阴影颜色。
+        shadowOffsetX: 0,
+        shadowOffsetY: 10,
+      },
+    },
+    series: [
+      {
+        name: "map",
+        type: "map", // 地图
+        map: mapName, // 加载注册的地图
+        selectedMode: false, // 不让单独选中
+        roam: true, // 开始鼠标事件，scale缩放、move移动
+        // 图形上的文本标签
+        label: {
+          show: true,
+          color: "#000a3c",
+        },
+        // 地图样式
+        itemStyle: {
+          // 区域样式
+          areaColor: {
+            type: "radial",
+            x: 0.5,
+            y: 0.5,
+            r: 3,
+            colorStops: [
+              {
+                offset: 0,
+                color: "rgba(223, 231, 242, 1)", // 0% 处的颜色
+              },
+              {
+                offset: 1,
+                color: "rgba(2, 99, 206, 1)", // 100% 处的颜色
+              },
+            ],
+            globalCoord: false, // 缺省为 false
+          },
+          borderWidth: 1, // 边框大小
+          borderColor: "rgba(104, 152, 190, 1)", // 边框样式
+          shadowColor: "rgba(128, 217, 248, 1)", // 阴影颜色
+          shadowOffsetX: -2, // 阴影水平方向上的偏移距离
+          shadowOffsetY: 2, // 阴影垂直方向上的偏移距离
+          shadowBlur: 10, // 文字块的背景阴影长度
+        },
+        // 选中状态下样式
+        emphasis: {
+          label: {
+            color: "#ffffff",
+          },
+          itemStyle: {
+            areaColor: "#a5d4fe",
+          },
+        },
+      },
+    ],
+  };
+  myChart.setOption(options); // 实例配置项与数据
+}
 
 
 function initEchartsMap() {
   echarts.registerMap('china', chinaJSON)
 
-  const myChart = echarts.init(chinaMap.value)
+  myChart = echarts.init(chinaMap.value)
+
+  historyList.value.push({
+    code: "china",
+    name: "中国",
+  });
 
   myChart.setOption(options.value);
+
+  // myChart.value.on("click", (params) => {
+  //   // 当双击事件发生时，清除单击事件，仅响应双击事件
+  //   clearTimeout(timeFn);
+  //   timeFn = setTimeout(function () {
+  //     if (
+  //         allAreaCode.filter((item) => item.name.indexOf(params.name) > -1)[0]
+  //     ) {
+  //       let areaCode = allAreaCode.filter(
+  //           (item) => item.name.indexOf(params.name) > -1
+  //       )[0].code;
+  //       loadMap(
+  //           `https://geo.datav.aliyun.com/areas_v3/bound/${areaCode}_full.json`
+  //       )
+  //           .then((data) => {
+  //             initMap(data, areaCode);
+  //           })
+  //           .catch(() => {
+  //             loadMap(
+  //                 `https://geo.datav.aliyun.com/areas_v3/bound/${areaCode}.json`
+  //             )
+  //                 .then((res) => {
+  //                   initMap(res, areaCode);
+  //                 })
+  //                 .catch(() => {});
+  //           });
+  //
+  //       historyList.push({
+  //         code: areaCode,
+  //         name: params.name,
+  //       });
+  //
+  //       let result = [];
+  //       let obj = {};
+  //       for (let i = 0; i < historyList.length; i++) {
+  //         if (!obj[historyList[i].code]) {
+  //           result.push(historyList[i]);
+  //           obj[historyList[i].code] = true;
+  //         }
+  //       }
+  //       historyList = result;
+  //     }
+  //   }, 250);
+  // });
+
+  // myChart.value.on("dblclick", (params) => {
+  //   // 当双击事件发生时，清除单击事件，仅响应双击事件
+  //   clearTimeout(timeFn);
+  //   if (historyList.length == 1) {
+  //     alert("已经到达最上一级地图了");
+  //     return;
+  //   }
+  //   let map = historyList.pop();
+  //   if (historyList[historyList.length - 1].code == "china") {
+  //     initMap(china, "china", "中国");
+  //   } else {
+  //     loadMap(
+  //         `https://geo.datav.aliyun.com/areas_v3/bound/${
+  //             historyList[historyList.length - 1].code
+  //         }_full.json`
+  //     ).then((data) => {
+  //       initMap(data, historyList[historyList.length - 1].code);
+  //     }).catch(() => {
+  //       loadMap(
+  //           `https://geo.datav.aliyun.com/areas_v3/bound/${
+  //               historyList[historyList.length - 1].code
+  //           }.json`
+  //       )
+  //           .then((res) => {
+  //             initMap(res, historyList[historyList.length - 1].code);
+  //           })
+  //           .catch(() => {});
+  //     });
+  //   }
+  // });
+
+  // myChart.value.on("georoam", (params) => {
+  //   let option = mapEcharts.getOption(); //获得option对象
+  //   if (params.zoom != null && params.zoom != undefined) {
+  //     //捕捉到缩放时
+  //     option.geo[0].zoom = option.series[0].zoom; //下层geo的缩放等级跟着上层的geo一起改变
+  //     option.geo[0].center = option.series[0].center; //下层的geo的中心位置随着上层geo一起改变
+  //   } else {
+  //     //捕捉到拖曳时
+  //     option.geo[0].center = option.series[0].center; //下层的geo的中心位置随着上层geo一起改变
+  //   }
+  //   myChart.value.setOption(option); //设置option
+  // });
 }
 
 
