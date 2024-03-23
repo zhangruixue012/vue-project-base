@@ -34,7 +34,15 @@ onMounted(() => {
   const box = new THREE.BoxGeometry(1,1,1);
 
   const cube = new THREE.Mesh(box, material);
-  scene.add(cube);
+  cube.position.x = 3;
+
+
+  const parentCube = new THREE.Mesh();
+  parentCube.position.x = -3;
+
+  parentCube.add(cube)
+
+  scene.add(parentCube);
 
   const axesHelper = new THREE.AxesHelper(3);
   scene.add(axesHelper)
