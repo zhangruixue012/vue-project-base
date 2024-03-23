@@ -145,12 +145,24 @@
       },
       "children": [
         {
-          "name": "Three",
+          "name": "demo1",
           "path": "demo1",
           "hidden": false,
           "component": "three/demo1",
           "meta": {
             "title": "demo1",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
+        },
+        {
+          "name": "demo2",
+          "path": "demo2",
+          "hidden": false,
+          "component": "three/demo2",
+          "meta": {
+            "title": "demo2",
             "icon": "",
             "noCache": false,
             "link": null
