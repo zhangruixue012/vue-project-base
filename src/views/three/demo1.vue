@@ -10,7 +10,8 @@
 <script setup>
 
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js';
 
 let container;
 
@@ -36,25 +37,51 @@ onMounted(() => {
   const cube = new THREE.Mesh(box, material);
   cube.position.x = 3;
 
+  // 平移 && 缩放
+  cube.scale.set(2, 2, 2);
 
-  const parentCube = new THREE.Mesh();
-  parentCube.position.x = -3;
+  cube.rotation.x = Math.PI/4;
+  cube.rotation.y= Math.PI/4;
 
-  parentCube.add(cube)
 
-  scene.add(parentCube);
+  scene.add(cube);
 
-  const axesHelper = new THREE.AxesHelper(3);
+  const axesHelper = new THREE.AxesHelper(10);
   scene.add(axesHelper)
 
   const control = new OrbitControls(camera, renderer.domElement);
-  scene.add(control);
-  control.autoRotate = true;
-  control.enableDamping = true;
+  // control.autoRotate = true;
+  // control.enableDamping = true;
   control.update();
+  control.addEventListener('change', function () {
+
+    renderer.render(scene, camera); //执行渲染操作
+  });
+
 
   renderer.render(scene, camera)
 
+  // GUI
+  let eventObj = {
+    fullscreen: function () {
+      document.body.requestFullscreen();
+    },
+    exitFullscreen() {
+      document.exitFullscreen()
+    }
+  };
+  const gui = new GUI();
+  gui.add(eventObj, 'fullscreen').name('全屏');
+  gui.add(eventObj, 'exitFullscreen').name('退出全屏');
+
+  const folder = gui.addFolder('立方体位置');
+  folder.add(cube.position, 'x').min(-10).max(10).step(1).name('立方体x轴位置').onChange(val => {
+    renderer.render(scene, camera)
+  }).onFinishChange(val => {
+    renderer.render(scene, camera)
+  });
+
+  folder.add(material, 'wireframe').name('线框样式');
 
   function animate() {
     requestAnimationFrame(animate);
@@ -64,7 +91,7 @@ onMounted(() => {
 
   }
 
-  animate();
+  // animate();
 
 });
 
