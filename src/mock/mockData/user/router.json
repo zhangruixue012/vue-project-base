@@ -167,6 +167,42 @@
             "noCache": false,
             "link": null
           }
+        },
+        {
+          "name": "demo3",
+          "path": "demo3",
+          "hidden": false,
+          "component": "three/demo3",
+          "meta": {
+            "title": "demo3",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
+        },
+        {
+          "name": "demo4",
+          "path": "demo4",
+          "hidden": false,
+          "component": "three/demo4",
+          "meta": {
+            "title": "demo4",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
+        },
+        {
+          "name": "demo5",
+          "path": "demo5",
+          "hidden": false,
+          "component": "three/demo5",
+          "meta": {
+            "title": "demo5",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
         }
       ]
     }

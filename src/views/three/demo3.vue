@@ -67,8 +67,6 @@ onMounted(() => {
   });
 
 
-
-
   const cube = new THREE.Mesh(geometry, [material, material1,material2, material3, material4, material5]);
 
   scene.add(cube);

@@ -39,7 +39,7 @@ onMounted(() => {
     1, -1, 0,
     1, 1, 0,
    -1, 1, 0
-  ]);
+  ]); // plane 的 position属性依然是（x:0, y:0, z:0）
   // 将顶点数据设置到几何体上
   geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
 
@@ -48,11 +48,17 @@ onMounted(() => {
 
   const material = new THREE.MeshBasicMaterial({
     color: 0x00ff00,
-    // side: THREE.DoubleSide
+    side: THREE.DoubleSide,
     wireframe: true
   });
   const plane = new THREE.Mesh(geometry, material);
-  console.log('geometry:', geometry)
+  // plane.position.x = 3;
+  geometry.translate(3, 0, 0)
+
+  // geometry.rotateX(Math.PI/2)
+  geometry.scale(2,2,2)
+
+  console.log('plane:', plane)
   scene.add(plane);
 
   const axesHelper = new THREE.AxesHelper(10);
