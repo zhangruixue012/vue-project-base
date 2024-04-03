@@ -1,9 +1,7 @@
-<!--Tween-->
+<!--线框几何体-->
 <template>
   <div class="index-vue">
-
     <div id="demo6" class="three-demo6"></div>
-
   </div>
 </template>
 
@@ -23,7 +21,7 @@ onMounted(() => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 15;
+  camera.position.z = 30;
   camera.position.y = 2;
   camera.position.x = 2;
   camera.lookAt(0, 0, 0);
@@ -32,6 +30,8 @@ onMounted(() => {
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
+
+
 
   const sphere1 = new THREE.Mesh(
       new THREE.SphereGeometry(1, 32, 32),
@@ -42,30 +42,44 @@ onMounted(() => {
   sphere1.position.x = -4;
   scene.add(sphere1);
 
-  const tween1 = new TWEEN.Tween(sphere1.position).to({x: 5}, 1000);
-  const tween2 = new TWEEN.Tween(sphere1.position).to({x: -5}, 1000);
-  tween1.chain(tween2);
-  tween2.chain(tween1);
+  // const sphere2 = new THREE.Mesh(
+  //     new THREE.SphereGeometry(1, 32, 32),
+  //     new THREE.MeshBasicMaterial({
+  //       color: 0xFF0000
+  //     })
+  // );
+  // sphere2.position.x = 0;
+  // scene.add(sphere2);
+  //
+  // const sphere3 = new THREE.Mesh(
+  //     new THREE.SphereGeometry(1, 32, 32),
+  //     new THREE.MeshBasicMaterial({
+  //       color: 0x0000FF
+  //     })
+  // );
+  // sphere3.position.x = 4;
+  // scene.add(sphere3);
 
-  tween1.start()
+  const sphereGeometry =  new THREE.SphereGeometry(1, 32, 32);
+  const edgesGeometry = new THREE.EdgesGeometry(sphereGeometry);
 
+  // 用于绘制线框样式几何体的材质
+  const edgesMaterial = new THREE.LineBasicMaterial({
+    color: 0xffffff,
+  });
 
-  tween1.onStart(() => {
-    // console.log('开始')
-  })
+  // 绘制线
+  const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
 
+  sphere1.updateWorldMatrix(true, true)
 
-  tween1.onUpdate(function (object) {
-    // console.log(object.x)
-  })
+  // 存储物体的本地变换矩阵，这是对象相对于父对象的变换矩阵
+  edges.matrix.copy(sphere1.matrixWorld)
 
-  tween1.onComplete(function (object) {
-    // console.log(object.x)
-  })
+  // 设置变换矩阵所需的位置信息
+  edges.matrix.decompose(edges.position, edges.quaternion, edges.scale)
 
-  const axesHelper = new THREE.AxesHelper(10);
-  scene.add(axesHelper)
-
+  scene.add(edges);
 
   const control = new OrbitControls(camera, renderer.domElement);
   control.update();
@@ -77,16 +91,6 @@ onMounted(() => {
     TWEEN.update();
     renderer.render(scene, camera);
   }
-
-  const params = {
-    stop: function () {
-      tween1.stop();
-    }
-  }
-
-
-  const gui = new GUI();
-  gui.add(params, 'stop').name('停止');
 
 
 })

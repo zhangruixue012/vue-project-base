@@ -203,7 +203,20 @@
             "noCache": false,
             "link": null
           }
+        },
+        {
+          "name": "demo6",
+          "path": "demo6",
+          "hidden": false,
+          "component": "three/demo6",
+          "meta": {
+            "title": "demo6",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
         }
+
       ]
     }
   ]
