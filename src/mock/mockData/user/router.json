@@ -145,6 +145,18 @@
       },
       "children": [
         {
+          "name": "example",
+          "path": "example",
+          "hidden": false,
+          "component": "three/demoExample",
+          "meta": {
+            "title": "example",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
+        },
+        {
           "name": "demo1",
           "path": "demo1",
           "hidden": false,
@@ -259,6 +271,18 @@
           "component": "three/demo10",
           "meta": {
             "title": "demo10",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
+        },
+        {
+          "name": "demo11",
+          "path": "demo11",
+          "hidden": false,
+          "component": "three/demo11",
+          "meta": {
+            "title": "demo11",
             "icon": "",
             "noCache": false,
             "link": null
