@@ -1,4 +1,3 @@
-
 /**
  * @description usePage 接收一个 opts 参数，返回列表所需数据
  * @param {Object} opts.searchForm - 默认查询参数
@@ -39,6 +38,7 @@ export function usePage(opts){
     const multipleSelection = ref([])
 
     const queryParams = reactive({})
+
     function generateQueryParams() {
         searchKeyList.forEach(item => {
             if (item.defaultValue) {
@@ -87,7 +87,7 @@ export function usePage(opts){
     }
 
     function deleteRow(row) {
-        let param = { ids: row.id }
+        let param = {ids: row.id}
         if (!row.id) {
             param = getDeleteParam(row);
         }
@@ -98,8 +98,10 @@ export function usePage(opts){
                     getList()
                 })
             })
-            .then(() => { })
-            .catch(() => { });
+            .then(() => {
+            })
+            .catch(() => {
+            });
     }
 
     function handleSizeChange(size) {
@@ -128,7 +130,7 @@ export function usePage(opts){
             .confirm("是否确认删除" + idsArray.length + "条数据项？")
             .then(() => {
                 const idsString = idsArray.filter(item => item !== undefined).join(',')
-                let param = { ids: idsString };
+                let param = {ids: idsString};
 
                 if (!idsString) {
                     param = getDeleteParam(multipleSelection.value);
@@ -137,8 +139,10 @@ export function usePage(opts){
                     getList()
                 })
             })
-            .then(() => {})
-            .catch(() => {});
+            .then(() => {
+            })
+            .catch(() => {
+            });
     }
 
     onMounted(() => {
