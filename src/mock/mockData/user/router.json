@@ -299,6 +299,18 @@
             "noCache": false,
             "link": null
           }
+        },
+        {
+          "name": "demo13",
+          "path": "demo13",
+          "hidden": false,
+          "component": "three/demo13",
+          "meta": {
+            "title": "demo13",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
         }
 
       ]
