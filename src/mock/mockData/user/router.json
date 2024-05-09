@@ -311,6 +311,18 @@
             "noCache": false,
             "link": null
           }
+        },
+        {
+          "name": "demo14",
+          "path": "demo14",
+          "hidden": false,
+          "component": "three/demo14",
+          "meta": {
+            "title": "demo14",
+            "icon": "",
+            "noCache": false,
+            "link": null
+          }
         }
 
       ]
